@@ -35,8 +35,8 @@ include(external/imgui.cmake)
 
 # add executable
 add_executable(demo main.cpp
-        project/food.cpp
-        project/food.h)
+        assets/food.cpp
+        assets/food.h)
 add_executable(demo2 main2.cpp)
 
 find_package(OpenGL REQUIRED)
