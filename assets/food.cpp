@@ -93,3 +93,7 @@ string Frozen::print() {
 
     return stream.str();
 }
+
+//ImGui::Begin("Window");
+// write in a while loop inside newFrame() before cleanup / end of loop ADTER ImGui::NewFrame
+//ImGui::End();
