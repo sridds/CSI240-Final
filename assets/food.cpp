@@ -72,3 +72,24 @@ string Dairy::print() {
 
     return stream.str();
 }
+
+/*
+ * FROZEN
+ */
+
+Frozen::Frozen(string name, double price, NutritionFacts nutritionFacts, bool isGlutenFree, bool isVegan) : Food(name, price){
+    this->isGlutenFree = isGlutenFree;
+    this->isVegan = isVegan;
+    this->nutritionFacts = nutritionFacts;
+}
+
+bool Frozen::getIsGlutenFree() { return isGlutenFree; }
+bool Frozen::getIsVegan() { return isVegan; }
+NutritionFacts Frozen::getNutritionFacts() { return nutritionFacts; }
+
+string Frozen::print() {
+    stringstream stream;
+    stream << name + " ~ $" + to_string(price) + " ~ Gluten Free: " + to_string(isGlutenFree) + " ~ Vegan: " +  to_string(isVegan);
+
+    return stream.str();
+}

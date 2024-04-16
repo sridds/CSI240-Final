@@ -82,10 +82,20 @@ public:
 
 class Frozen : Food {
 private:
+    NutritionFacts nutritionFacts;
     bool isGlutenFree;
     bool isVegan;
 
 public:
+    // constructors
+    Frozen(string name, double price, NutritionFacts nutritionFacts, bool isGlutenFree = false, bool isVegan = false);
+
+    // getters
+    NutritionFacts getNutritionFacts();
+    bool getIsGlutenFree();
+    bool getIsVegan();
+
+    // methods
     string print() override;
 };
 
