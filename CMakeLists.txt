@@ -39,6 +39,8 @@ add_executable(testing assets/main3.cpp
         assets/food.h
         assets/user.cpp
         assets/user.h
+        assets/store.cpp
+        assets/store.h
         cmake-build-debug/bin/userinfo.txt
 )
 add_executable(demo main.cpp)

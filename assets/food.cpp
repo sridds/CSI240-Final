@@ -9,6 +9,25 @@
  * FOOD
  */
 
+Food::Food(){
+    name = "null";
+    price = 0.0;
+}
+Produce::Produce() : Food("null", 0.0){
+    type = UNDEFINED;
+}
+Dairy::Dairy() : Food("null", 0.0){
+    isSpoiled = false;
+}
+
+Deli::Deli() : Food("null", 0.0){
+    pounds = 0.0;
+}
+Frozen::Frozen() : Food("null", 0.0){
+    isVegan = false;
+    isGlutenFree = false;
+}
+
 Food::Food(string name, double price){
     this->name = name;
     this->price = price;

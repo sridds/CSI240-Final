@@ -8,15 +8,19 @@
 
 using namespace std;
 
-enum ProduceType{ EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, MARROW };
+enum ProduceType{ EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, MARROW, UNDEFINED = -1 };
 const string PRODUCE_STRINGS[] = { "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Marrow" };
 
 struct NutritionFacts{
+public:
     double calories;
     double totalFat;
     double sodium;
     double protein;
     double totalSugars;
+
+    NutritionFacts() {}
+    NutritionFacts(double calories, double totalFat, double sodium, double protein, double totalSugars) : calories(calories), totalFat(totalFat), sodium(sodium), totalSugars(totalSugars) { }
 };
 
 class Food {
@@ -26,6 +30,7 @@ protected:
 
 public:
     // constructors
+    Food();
     Food(string name, double price);
 
     // getters
@@ -42,6 +47,7 @@ private:
 
 public:
     // constructors
+    Produce();
     Produce(string name, double price, ProduceType type);
 
     // getters
@@ -58,6 +64,7 @@ private:
 
 public:
     // constructors
+    Dairy();
     Dairy(string name, double price, NutritionFacts nutritionFacts, bool isSpoiled = false);
 
     // getters / setters
@@ -74,6 +81,7 @@ private:
     double pounds;
 
 public:
+    Deli();
     Deli(string name, double price, double pounds);
 
     double getPounds();
@@ -88,6 +96,7 @@ private:
 
 public:
     // constructors
+    Frozen();
     Frozen(string name, double price, NutritionFacts nutritionFacts, bool isGlutenFree = false, bool isVegan = false);
 
     // getters
