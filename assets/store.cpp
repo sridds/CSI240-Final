@@ -4,8 +4,11 @@
 
 #include "store.h"
 #include "food.h"
+#include <fstream>
 
+// Defines a store with provided dimensions w and h
 Store::Store(int w, int h) {
+    // initialize arrays
     produceAisle = new Produce*[w];
     dairyAisle = new Dairy*[w];
     deliAisle = new Deli*[w];
@@ -16,6 +19,12 @@ Store::Store(int w, int h) {
         dairyAisle[i] = new Dairy[h];
         deliAisle[i] = new Deli[h];
         frozenAisle[i] = new Frozen[h];
+    }
+
+    ifstream produceIn("produce.txt", ios::in);
+
+    while(!produceIn.eof()){
+        
     }
 
     // loop through array and create new

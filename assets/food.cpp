@@ -13,6 +13,7 @@ Food::Food(){
     name = "null";
     price = 0.0;
 }
+
 Produce::Produce() : Food("null", 0.0){
     type = UNDEFINED;
 }

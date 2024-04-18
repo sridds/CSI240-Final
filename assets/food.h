@@ -8,8 +8,8 @@
 
 using namespace std;
 
-enum ProduceType{ EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, MARROW, UNDEFINED = -1 };
-const string PRODUCE_STRINGS[] = { "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Marrow" };
+enum ProduceType{ FRUIT, EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, MARROW, UNDEFINED = -1 };
+const string PRODUCE_STRINGS[] = { "Fruit", "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Marrow" };
 
 struct NutritionFacts{
 public:
@@ -39,9 +39,15 @@ public:
 
     // methods
     virtual string print() = 0;
+
+    // checks equality based on name
+    template <typename T>
+    friend bool operator==(const T& a, const T& b){
+        return a.name == b.name;
+    }
 };
 
-class Produce : Food {
+class Produce : public Food {
 private:
     ProduceType type;
 
@@ -57,7 +63,7 @@ public:
     string print() override;
 };
 
-class Dairy : Food {
+class Dairy : public Food {
 private:
     bool isSpoiled;
     NutritionFacts nutritionFacts;
@@ -76,7 +82,7 @@ public:
     string print() override;
 };
 
-class Deli : Food {
+class Deli : public Food {
 private:
     double pounds;
 
@@ -88,7 +94,7 @@ public:
     string print() override;
 };
 
-class Frozen : Food {
+class Frozen : public Food {
 private:
     NutritionFacts nutritionFacts;
     bool isGlutenFree;
