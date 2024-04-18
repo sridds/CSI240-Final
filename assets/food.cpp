@@ -77,14 +77,12 @@ string Deli::print() {
  * DAIRY
  */
 
-Dairy::Dairy(string name, double price, NutritionFacts nutritionFacts, bool isSpoiled) : Food(name, price){
+Dairy::Dairy(string name, double price, bool isSpoiled) : Food(name, price){
     this->isSpoiled = isSpoiled;
-    this->nutritionFacts = nutritionFacts;
 }
 
 void Dairy::setIsSpoiled(bool spoiled) { isSpoiled = spoiled; }
 bool Dairy::getIsSpoiled() { return isSpoiled; }
-NutritionFacts Dairy::getNutritionFacts() { return nutritionFacts; }
 
 string Dairy::print() {
     stringstream stream;
@@ -97,15 +95,13 @@ string Dairy::print() {
  * FROZEN
  */
 
-Frozen::Frozen(string name, double price, NutritionFacts nutritionFacts, bool isGlutenFree, bool isVegan) : Food(name, price){
+Frozen::Frozen(string name, double price, bool isGlutenFree, bool isVegan) : Food(name, price){
     this->isGlutenFree = isGlutenFree;
     this->isVegan = isVegan;
-    this->nutritionFacts = nutritionFacts;
 }
 
 bool Frozen::getIsGlutenFree() { return isGlutenFree; }
 bool Frozen::getIsVegan() { return isVegan; }
-NutritionFacts Frozen::getNutritionFacts() { return nutritionFacts; }
 
 string Frozen::print() {
     stringstream stream;
