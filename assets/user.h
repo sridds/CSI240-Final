@@ -8,29 +8,27 @@ using namespace std;
 #ifndef MYPROJECT_USER_H
 #define MYPROJECT_USER_H
 
-class User
-{
+class User {
+private:
+    // member variables
+    string username;
+    string password;
+
 public:
+    // getters
+    string getUsername();
+    string getPassword();
+
+    // setters
+    void setUsername(string user);
+    void setPassword(string pass);
+
+
     // default constructor
     User();
 
-    // alt constructor
-    User(string name, string key);
-
-    // setters
-    void SetUser(string name);
-    void SetPass(string key);
-
-    // getters
-    string GetUser();
-    string GetPass();
-
-    // destructor
-     ~User();
-
-private:
-    string user;
-    string pass;
+    // alternate constructor
+    User(string user, string pass);
 };
 
 

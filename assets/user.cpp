@@ -9,39 +9,28 @@ using namespace std;
 
 User::User()
 {
-    user = "username";
-    pass = "password";
+    username = "";
+    password = "";
 }
 
-User::User(string name, string key)
+User::User(string user, string pass)
 {
-    user = name;
-    pass = key;
+    username = user;
+    password = pass;
 }
 
-void User::SetUser(string name)
+string User::getUsername() { return username; }
+
+string User::getPassword() { return password; }
+
+void User::setPassword(string pass)
 {
-    user = name;
+    password = pass;
 }
 
-void User::SetPass(string key)
+void User::setUsername(string user)
 {
-    pass = key;
-}
-
-string User::GetUser()
-{
-    return user;
-}
-
-string User::GetPass()
-{
-    return pass;
-}
-
-User::~User()
-{
-    delete this;
+    username = user;
 }
 
 
