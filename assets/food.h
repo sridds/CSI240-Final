@@ -8,20 +8,8 @@
 
 using namespace std;
 
-enum ProduceType{ FRUIT, EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, MARROW, UNDEFINED = -1 };
-const string PRODUCE_STRINGS[] = { "Fruit", "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Marrow" };
-
-struct NutritionFacts{
-public:
-    double calories;
-    double totalFat;
-    double sodium;
-    double protein;
-    double totalSugars;
-
-    NutritionFacts() {}
-    NutritionFacts(double calories, double totalFat, double sodium, double protein, double totalSugars) : calories(calories), totalFat(totalFat), sodium(sodium), totalSugars(totalSugars) { }
-};
+enum ProduceType{ FRUIT, EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, FUNGUS, UNDEFINED = -1 };
+const string PRODUCE_STRINGS[] = { "Fruit", "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Fungus" };
 
 class Food {
 protected:
@@ -66,17 +54,15 @@ public:
 class Dairy : public Food {
 private:
     bool isSpoiled;
-    NutritionFacts nutritionFacts;
 
 public:
     // constructors
     Dairy();
-    Dairy(string name, double price, NutritionFacts nutritionFacts, bool isSpoiled = false);
+    Dairy(string name, double price, bool isSpoiled = false);
 
     // getters / setters
     void setIsSpoiled(bool spoiled);
     bool getIsSpoiled();
-    NutritionFacts getNutritionFacts();
 
     // methods
     string print() override;
@@ -96,17 +82,15 @@ public:
 
 class Frozen : public Food {
 private:
-    NutritionFacts nutritionFacts;
     bool isGlutenFree;
     bool isVegan;
 
 public:
     // constructors
     Frozen();
-    Frozen(string name, double price, NutritionFacts nutritionFacts, bool isGlutenFree = false, bool isVegan = false);
+    Frozen(string name, double price, bool isGlutenFree = false, bool isVegan = false);
 
     // getters
-    NutritionFacts getNutritionFacts();
     bool getIsGlutenFree();
     bool getIsVegan();
 

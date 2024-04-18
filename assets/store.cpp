@@ -24,7 +24,7 @@ Store::Store(int w, int h) {
     ifstream produceIn("produce.txt", ios::in);
 
     while(!produceIn.eof()){
-        
+
     }
 
     // loop through array and create new
@@ -32,9 +32,9 @@ Store::Store(int w, int h) {
         for(int y = 0; y < h; y++){
             // create new produce
             produceAisle[x][y] = *new Produce("name", 1, EXOTIC);
-            dairyAisle[x][y] = *new Dairy("name", 1, NutritionFacts {});
+            dairyAisle[x][y] = *new Dairy("name", 1);
             deliAisle[x][y] = *new Deli("name", 1, 1);
-            frozenAisle[x][y] = *new Frozen("name", 1, NutritionFacts {});
+            frozenAisle[x][y] = *new Frozen("name", 1);
         }
     }
 }
