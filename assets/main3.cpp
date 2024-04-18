@@ -10,44 +10,44 @@
 
 using namespace std;
 
-void CreateUsers(vector<User>& list)
+// Function to read usernames and passwords from a file and create User objects
+vector<User> readUsersFromFile(const string& filename)
 {
-    ifstream userInfo("userinfo.txt");
+    vector<User> users;
     string user, pass;
 
-    if (!userInfo)
+    ifstream file(filename);
+
+    if (!file.is_open())
     {
-        cout << "Error: Unable to open file." << endl;
-        return;
+        cerr << "Error opening file: " << filename << endl;
+        return users;
     }
 
-    while (getline(userInfo, user) && getline(userInfo, pass))
+    while(getline(file, user) && getline(file, pass))
     {
-        User temp(user, pass);
-        //list.emplace_back(temp);
-        cout << "user added: " << temp.GetUser() << " " << temp.GetPass() << endl;
-        break;
+
+        users.emplace_back(user, pass);
+
+        cout << "user: " << user << " " << pass << endl;
+
     }
 
-    if (userInfo.eof())
+    if (file.eof())
     {
         cout << "End of file reached." << endl;
     }
-    else if (userInfo.fail())
-    {
-        cout << "Error reading from file." << endl;
-    }
 
-    userInfo.close();
+    return users;
 }
 
+int main() {
+    std::vector<User> users = readUsersFromFile("userinfo.txt");
 
-int main()
-{
-    vector<User> userList;
-    CreateUsers(userList);
-    cout << userList[0].GetUser() << endl;
-    cout << userList[1].GetUser() << endl;
+    // Print the usernames and passwords of the users created
+    for (auto& user : users) {
+        std::cout << "Username: " << user.GetUser() << ", Password: " << user.GetPass() << std::endl;
+    }
 
     return 0;
 }

@@ -9,8 +9,8 @@ using namespace std;
 
 User::User()
 {
-    user = "";
-    pass = "";
+    user = "username";
+    pass = "password";
 }
 
 User::User(string name, string key)
