@@ -3,43 +3,21 @@
 //
 
 #include <iostream>
-#include <fstream>
 #include <string>
 #include <vector>
 #include "user.h"
+#include "mainfunctions.h"
 
 using namespace std;
 
 int main()
 {
-    ifstream stream;
-    vector<User> users;
+    vector<User> userList = readUsersToVector("userinfo.txt");
 
-    stream.open("userinfo.txt", ios::in);
-
-    if (stream.fail())
+    for (int i = 0; i < userList.size(); i++)
     {
-        cout << "Failed to open user file!";
-
-        // ensure the stream is closed
-        stream.close();
+        cout << userList[i].getUsername() << " " << userList[i].getPassword() << endl;
     }
 
-    string uname, pword;
-
-    while(!stream.eof())
-    {
-        getline(stream, uname);
-        getline(stream, pword);
-
-
-        users.push_back(User(uname, pword));
-    }
-
-    for (int i = 0; i < users.size(); i++)
-    {
-        cout << users[i].getUsername() << " " << users[i].getPassword() << endl;
-    }
-
-    stream.close();
+    PromptLogin(userList);
 }
