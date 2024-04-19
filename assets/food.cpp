@@ -4,6 +4,7 @@
 
 #include "food.h"
 #include <sstream>
+#include <fstream>
 
 /*
  * FOOD
