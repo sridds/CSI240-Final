@@ -14,17 +14,28 @@ int main()
 {
     vector<User> userList = readUsersToVector("userinfo.txt");
     int choice;
-    string loggedInUser;
+    string loggedInUsername;
+    User loggedInUser;
     bool loggedIn = false;
 
+    // main game loop, will not be exited unless the user chooses to quit the game on menus
     while (true)
     {
         choice = PromptMainMenuChoice(userList);
         loggedIn = false;
 
-        if (choice == 1) {
-            loggedInUser = PromptLogin(userList);
+        // if user chooses to log in, store their name and the user object associated
+        if (choice == 1)
+        {
+            loggedInUsername = PromptLogin(userList);
             loggedIn = true;
+            for (User &p : userList)
+            {
+                if (p.getUsername() == loggedInUsername)
+                {
+                    loggedInUser = p;
+                }
+            }
         }
         else if (choice == 2)
         {
@@ -49,6 +60,10 @@ int main()
                 case 3:
                     // 3. Log Out
                     loggedIn = false;
+                    break;
+                case 4:
+                    // 4. Quit Program
+                    exit(0);
                     break;
                 default:
                     break;

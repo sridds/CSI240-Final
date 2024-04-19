@@ -20,7 +20,7 @@ int PromptMainMenuChoice(vector<User> list);
 int PromptLoggedInChoice();
 
 // prints the given username's overall statistics
-void PrintUserStats(string username);
+void PrintUserStats(User user);
 
 // statistics in userinfo.txt are structured as follows
 // username

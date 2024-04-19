@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <conio.h>
 #include "stdlib.h"
 #include "user.h"
 #include "mainfunctions.h"
@@ -26,19 +27,25 @@ vector<User> readUsersToVector(string filename)
         stream.close();
     }
 
-    string uname, pword, trash;
+    string uname, pword, temp;
+    int totalGames, totalItems, seconds;
+    double moneySpent;
 
     while(!stream.eof())
     {
         getline(stream, uname);
         getline(stream, pword);
-        // trashing stats variables
-        for (int i = 0; i < 4; i++)
-        {
-            getline(stream, trash);
-        }
+        getline(stream, temp);
+        totalGames = stoi(temp);
+        getline(stream, temp);
+        totalItems = stoi(temp);
+        getline(stream, temp);
+        moneySpent = stod(temp);
+        getline(stream, temp);
+        seconds = stoi(temp);
 
-        users.push_back(User(uname, pword));
+
+        users.push_back(User(uname, pword, totalGames, totalItems, moneySpent, seconds));
     }
 
     stream.close();
@@ -65,7 +72,7 @@ string PromptLogin(vector<User> list)
                 if (pass == list[i].getPassword())
                 {
                     loggedIn = true;
-                    cout << "You have successfully logged in!" << endl;
+                    cout << "You have successfully logged in!\n" << endl;
                 }
             }
         }
@@ -119,11 +126,11 @@ int PromptLoggedInChoice()
     {
         cout << "Pick a number of what you'd like to do!\n" << endl;
 
-        cout << "1. Start Game" << endl << "2. View User Statistics" << endl << "3. Log Out" << endl;
+        cout << "1. Start Game" << endl << "2. View User Statistics" << endl << "3. Log Out" << endl << "4. Quit Program" << endl;
 
         cin >> choice;
 
-        if (!(!cin.fail() && choice > 0 && choice < 4))
+        if (!(!cin.fail() && choice > 0 && choice < 5))
         {
             choice = 0;
             cout << "That was not a valid option, please pick a valid option between 1, 2, and 3." << endl;
@@ -133,8 +140,24 @@ int PromptLoggedInChoice()
     return choice;
 }
 
-void PrintUserStats(string username)
-{
-    ifstream stream;
-    // incomplete
+void PrintUserStats(User user) {
+    // default set time is 99999, which works out to 1666:39
+    const string DEFAULT_TIME = "1666:39";
+
+    cout << "Statistics for user " << user.getUsername() << ".\n" << endl;
+    cout << "Total Games Played: " << user.getGamesPlayed() << endl;
+    cout << "Total Items Grabbed: " << user.getItemsCollected() << endl;
+    cout << "Total Amount of Money Spent: " << user.getMoneySpent() << endl;
+
+    if (user.getBestTime() == DEFAULT_TIME) {
+        cout << "No time has been set by the user.\n" << endl;
+    }
+    else
+    {
+        cout << "Best Time Overall: " << user.getBestTime() << "\n" << endl;
+    }
+
+    cout << "Press Enter to return to the last menu.\n" << endl;
+
+    getch();
 }
