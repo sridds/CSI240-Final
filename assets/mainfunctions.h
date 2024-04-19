@@ -19,6 +19,9 @@ int PromptMainMenuChoice(vector<User> list);
 // prompts the user to choose a choice after they have logged in
 int PromptLoggedInChoice();
 
+// prompts the user for a new username and password, and adds this to userinfo.txt, as well as create a new user object
+User CreateNewUser(vector<User> list);
+
 // prints the given username's overall statistics
 void PrintUserStats(User user);
 

@@ -140,6 +140,17 @@ int PromptLoggedInChoice()
     return choice;
 }
 
+User CreateNewUser(vector<User> list)
+{
+    bool choice = false;
+    string username, password;
+
+    while (!choice)
+    {
+        cout << "\nPlease enter the username you wish to use: " << endl;
+    }
+}
+
 void PrintUserStats(User user) {
     // default set time is 99999, which works out to 1666:39
     const string DEFAULT_TIME = "1666:39";
