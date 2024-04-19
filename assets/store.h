@@ -11,14 +11,14 @@ using namespace std;
 class Store {
 private:
     // aisle references
-    Produce** produceAisle;
-    Dairy** dairyAisle;
-    Deli** deliAisle;
-    Frozen** frozenAisle;
+    Produce* produceAisle;
+    Dairy* dairyAisle;
+    Deli* deliAisle;
+    Frozen* frozenAisle;
 
 public:
     // constructors
-    Store(int aisleWidth, int aisleHeight);
+    Store();
 };
 
 

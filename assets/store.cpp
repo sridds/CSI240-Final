@@ -5,39 +5,46 @@
 #include "store.h"
 #include "food.h"
 #include <fstream>
+#include <string.h>
+
+const int STORE_LENGTH = 10;
 
 // Defines a store with provided dimensions w and h
-Store::Store(int w, int h) {
+Store::Store() {
     // initialize arrays
-    produceAisle = new Produce*[w];
-    dairyAisle = new Dairy*[w];
-    deliAisle = new Deli*[w];
-    frozenAisle = new Frozen*[w];
-
-    for(int i = 0; i < w; i++){
-        produceAisle[i] = new Produce[h];
-        dairyAisle[i] = new Dairy[h];
-        deliAisle[i] = new Deli[h];
-        frozenAisle[i] = new Frozen[h];
-    }
+    produceAisle = new Produce[STORE_LENGTH];
+    dairyAisle = new Dairy[STORE_LENGTH];
+    deliAisle = new Deli[STORE_LENGTH];
+    frozenAisle = new Frozen[STORE_LENGTH];
 
     ifstream produceIn("produce.txt", ios::in);
+    string produceName, produceCost, produceType, trash = "";
 
-    string produceLine = "";
+    // read in
+    int index = 0;
     while(!produceIn.eof()){
-        getline(produceIn, produceLine);
+        // ensure index does not surpass array const length
+        if(index >= STORE_LENGTH) break;
 
-        cout << produceIn << endl;
-    }
+        // get name, cost, and type from file
+        getline(produceIn, produceName);
+        getline(produceIn, produceCost);
+        getline(produceIn, produceType);
 
-    // loop through array and create new
-    for(int x = 0; x < w; x++){
-        for(int y = 0; y < h; y++){
-            // create new produce
-            produceAisle[x][y] = *new Produce("name", 1, EXOTIC);
-            dairyAisle[x][y] = *new Dairy("name", 1);
-            deliAisle[x][y] = *new Deli("name", 1, 1);
-            frozenAisle[x][y] = *new Frozen("name", 1);
+        ProduceType produceTypeKey;
+        // match produce type. replace with a try catch statement later
+        for(int i = 0; i < sizeof(PRODUCE_STRINGS); i++){
+            if(PRODUCE_STRINGS[i] == produceType){
+                produceTypeKey = (ProduceType)i;
+            }
         }
+        // create new food
+        produceAisle[index] = *new Produce(produceName, stod(produceCost), produceTypeKey);
+
+        // put empty seperator line in trash and iterate index
+        getline(produceIn, trash);
+        index++;
     }
+
+    produceIn.close();
 }
