@@ -23,8 +23,11 @@ Store::Store(int w, int h) {
 
     ifstream produceIn("produce.txt", ios::in);
 
+    string produceLine = "";
     while(!produceIn.eof()){
+        getline(produceIn, produceLine);
 
+        cout << produceIn << endl;
     }
 
     // loop through array and create new
