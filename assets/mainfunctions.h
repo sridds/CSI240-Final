@@ -10,7 +10,24 @@ using namespace std;
 // reads the userinfo.txt file into user instances, which are put into a vector
 vector<User> readUsersToVector(string filename);
 
-// prompts the user to log in to the system, cross checking the login info with the user list
-bool PromptLogin(vector<User> list);
+// prompts the user to log in to the system, cross-checking the login info with the user list
+string PromptLogin(vector<User> list);
+
+// prompts the user to choose a choice on the main menu
+int PromptMainMenuChoice(vector<User> list);
+
+// prompts the user to choose a choice after they have logged in
+int PromptLoggedInChoice();
+
+// prints the given username's overall statistics
+void PrintUserStats(string username);
+
+// statistics in userinfo.txt are structured as follows
+// username
+// password
+// total games played (int)
+// items found (int)
+// money spent (double)
+// best time in seconds (int, displayed in format minutes:seconds)
 
 #endif //MYPROJECT_MAINFUNCTIONS_H

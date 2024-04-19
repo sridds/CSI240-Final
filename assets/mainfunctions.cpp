@@ -7,6 +7,7 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include "stdlib.h"
 #include "user.h"
 #include "mainfunctions.h"
 
@@ -25,13 +26,17 @@ vector<User> readUsersToVector(string filename)
         stream.close();
     }
 
-    string uname, pword;
+    string uname, pword, trash;
 
     while(!stream.eof())
     {
         getline(stream, uname);
         getline(stream, pword);
-
+        // trashing stats variables
+        for (int i = 0; i < 4; i++)
+        {
+            getline(stream, trash);
+        }
 
         users.push_back(User(uname, pword));
     }
@@ -41,7 +46,7 @@ vector<User> readUsersToVector(string filename)
     return users;
 }
 
-bool PromptLogin(vector<User> list)
+string PromptLogin(vector<User> list)
 {
     string user, pass;
     bool loggedIn = false;
@@ -73,5 +78,63 @@ bool PromptLogin(vector<User> list)
         }
     }
 
-    return loggedIn;
+    return user;
+}
+
+int PromptMainMenuChoice(vector<User> list)
+{
+    int choice = 0;
+    cout << "Welcome to the Grocery Game!" << endl;
+
+    while (choice == 0)
+    {
+        cout << "Pick a number of what you'd like to do!\n" << endl;
+
+        cout << "1. Log In" << endl << "2. Create New Account" << endl << "3. Quit Program" << endl;
+
+        cin >> choice;
+
+        if (!(!cin.fail() && choice > 0 && choice < 4))
+        {
+            choice = 0;
+            cout << "That was not a valid option, please pick a valid option between 1, 2, and 3." << endl;
+        }
+    }
+
+    if (choice == 3)
+    {
+        exit(0);
+    }
+
+    return choice;
+}
+
+
+int PromptLoggedInChoice()
+{
+    int choice = 0;
+    cout << "Welcome to the Grocery Game!" << endl;
+
+    while (choice == 0)
+    {
+        cout << "Pick a number of what you'd like to do!\n" << endl;
+
+        cout << "1. Start Game" << endl << "2. View User Statistics" << endl << "3. Log Out" << endl;
+
+        cin >> choice;
+
+        if (!(!cin.fail() && choice > 0 && choice < 4))
+        {
+            choice = 0;
+            cout << "That was not a valid option, please pick a valid option between 1, 2, and 3." << endl;
+        }
+    }
+
+    return choice;
+}
+
+void PrintUserStats(string username)
+{
+    ifstream stream;
+    // incomplete
 }

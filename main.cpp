@@ -1,6 +1,9 @@
 #define SDL_MAIN_HANDLED true
 #include <iostream>
+#include <string>
 #include <algorithm>
+
+using namespace std;
 
 #include <SDL.h>
 #include <SDL_image.h>
@@ -95,6 +98,7 @@ int main(int argc, char* argv[]) {
     // Our state
     bool show_demo_window = true;
     bool show_another_window = false;
+    bool show_login_window = false;
     ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
 
     // Main loop
@@ -148,6 +152,7 @@ int main(int argc, char* argv[]) {
             ImGui::Text("This is some useful text.");               // Display some text (you can use a format strings too)
             ImGui::Checkbox("Demo Window", &show_demo_window);      // Edit bools storing our window open/close state
             ImGui::Checkbox("Another Window", &show_another_window);
+            ImGui::Checkbox("Login Window", &show_login_window);
 
             ImGui::SliderFloat("float", &f, 0.0f, 1.0f);            // Edit 1 float using a slider from 0.0f to 1.0f
             ImGui::ColorEdit3("clear color", (float*)&clear_color); // Edit 3 floats representing a color
@@ -171,6 +176,19 @@ int main(int argc, char* argv[]) {
             ImGui::End();
         }
 
+        if (show_login_window) {
+            // brodys code testing imgui features
+            ImGui::Begin("Log-in Window");
+
+            ImGui::Text("Please input your username:");
+
+            static char name[128] = "";
+
+            if (ImGui::Button("Close Me"))
+                show_login_window = false;
+
+            ImGui::End();
+        }
 
         // Rendering
         ImGui::Render();
@@ -180,7 +198,7 @@ int main(int argc, char* argv[]) {
 
         // todo: add your game logic here to be drawn before the ui rendering
         // Set renderer color red to draw the square
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0x00, 0x00, 0xFF);
+        SDL_SetRenderDrawColor(renderer, 0x00, 0xFF, 0x00, 0xFF);
         // Draw filled square
         SDL_RenderFillRect(renderer, &squareRect);
 
