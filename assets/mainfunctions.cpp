@@ -7,8 +7,6 @@
 #include <string>
 #include <vector>
 #include <limits>
-//#include <conio.h>
-#include "stdlib.h"
 #include "user.h"
 #include "mainfunctions.h"
 
@@ -100,6 +98,7 @@ int PromptMainMenuChoice(vector<User> list)
         cout << "1. Log In" << endl << "2. Create New Account" << endl << "3. Quit Program" << endl;
 
         cin >> choice;
+        cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
 
         if (!(!cin.fail() && choice > 0 && choice < 4))
         {
@@ -142,13 +141,53 @@ int PromptLoggedInChoice()
 
 User CreateNewUser(vector<User> list)
 {
-    bool choice = false;
+    bool choice = false, userTaken = false;
+    char yOrN;
     string username, password;
 
     while (!choice)
     {
         cout << "\nPlease enter the username you wish to use: " << endl;
+        getline(cin, username);
+        cout << username << endl;
+
+        for (User &p : list)
+        {
+            if (p.getUsername() == username)
+            {
+                cout << username << " " << p.getUsername() << endl;
+                userTaken = true;
+            }
+        }
+
+        if (!userTaken)
+        {
+            cout << "\nPlease enter the password you wish to use: " << endl;
+            getline(cin, password);
+
+            cout << "You have chosen username: " << username << " and password: " << password << endl;
+            cout << "Is this correct? (y/n)" << endl;
+            cin >> yOrN;
+            cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
+
+            if (yOrN == 'y')
+                choice = true;
+        }
+        else
+        {
+            cout << "The username you have chosen is already in use. Please try another.\n" << endl;
+            userTaken = false;
+        }
     }
+
+    ofstream stream("userinfo.txt", ios::app);
+
+    stream << endl << username << endl << password << endl << "0" << endl << "0"
+    << endl << "0" << endl << "99999";
+
+    User newUser = User(username, password, 0, 0, 0, 99999);
+
+    return newUser;
 }
 
 void PrintUserStats(User user) {
@@ -168,7 +207,5 @@ void PrintUserStats(User user) {
         cout << "Best Time Overall: " << user.getBestTime() << "\n" << endl;
     }
 
-    cout << "Press Enter to return to the last menu.\n" << endl;
-
-    //getch();
+    system("pause");
 }

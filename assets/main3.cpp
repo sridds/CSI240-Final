@@ -13,9 +13,11 @@ using namespace std;
 
 int main()
 {
+    /*
     Store* store = new Store();
     delete store;
-    /*
+     */
+
     vector<User> userList = readUsersToVector("userinfo.txt");
     int choice;
     string loggedInUsername;
@@ -43,7 +45,8 @@ int main()
         }
         else if (choice == 2)
         {
-            // call to create new user function
+            User newUser = CreateNewUser(userList);
+            userList.push_back(newUser);
             loggedIn = true;
         }
 
@@ -74,12 +77,4 @@ int main()
             }
         }
     }
-
-    /*
-     * prints out all usernames and passwords to console, for debugging
-    for (int i = 0; i < userList.size(); i++)
-    {
-        cout << userList[i].getUsername() << " " << userList[i].getPassword() << endl;
-    }
-     */
 }
