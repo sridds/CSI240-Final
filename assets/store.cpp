@@ -10,28 +10,32 @@
 // constants
 const int STORE_LENGTH = 10;
 const int PRODUCE_READ_LINES = 4;
+const int DELI_READ_LINES = 4;
+const int FROZEN_READ_LINES = 5;
 
 const string PRODUCE_FILE_PATH = "produce.txt";
-const string DAIRY_FILE_PATH = "produce.txt";
-const string DELI_FILE_PATH = "produce.txt";
-const string FROZEN_FILE_PATH = "produce.txt";
+const string DAIRY_FILE_PATH = "dairy.txt";
+const string DELI_FILE_PATH = "deli.txt";
+const string FROZEN_FILE_PATH = "frozen.txt";
 
 int* shuffleKeysFromFile(int size, int linesToSkip, string filePath);
 bool containsValue(int* arr, int value, int size);
 string* getRandomLinesFromFile(string path, int linesToRead);
 
 Produce* populateProduce();
+Deli* populateDeli();
+Frozen* populateFrozen();
 
 // Defines a store with provided dimensions w and h
 Store::Store() {
     // initialize arrays
     produceAisle = populateProduce();
     //dairyAisle = populateDairy();
-    //deliAisle = new Deli[STORE_LENGTH];
-    //frozenAisle = new Frozen[STORE_LENGTH];
+    deliAisle = populateDeli();
+    frozenAisle = populateFrozen();
 
     for(int i = 0; i < 10; i++){
-        cout << produceAisle[i].print() << endl;
+        cout << frozenAisle[i].print() << endl;
     }
 }
 
@@ -69,7 +73,7 @@ string* getRandomLinesFromFile(string path, int linesToRead, int lineCap){
         // put empty seperator line in trash and iterate index
         getline(fileIn, trash);
         index++;
-        lineCount += PRODUCE_READ_LINES - 1;
+        lineCount += linesToRead;
     }
 
     return data;
@@ -78,14 +82,11 @@ string* getRandomLinesFromFile(string path, int linesToRead, int lineCap){
 Produce* populateProduce(){
     // get random lines
     string* data = getRandomLinesFromFile(PRODUCE_FILE_PATH, PRODUCE_READ_LINES - 1, STORE_LENGTH);
-    Produce* produce = new Produce[STORE_LENGTH];
+    Produce* pProduce = new Produce[STORE_LENGTH];
 
     int produceIndex = 0;
 
-    // produce data
-    double cost;
-
-    // Store the data in the produce array
+    // Store the data in the pProduce array
     for(int i = 0; i < STORE_LENGTH * (PRODUCE_READ_LINES - 1); i += (PRODUCE_READ_LINES - 1)){
 
         ProduceType typeKey;
@@ -96,62 +97,44 @@ Produce* populateProduce(){
         }
 
         // store data. because of how the loop functions this will not break
-        produce[produceIndex] = *new Produce(data[i], stod(data[i + 1]), typeKey);
+        pProduce[produceIndex] = *new Produce(data[i], stod(data[i + 1]), typeKey);
         produceIndex++;
     }
-
-    return produce;
+    return pProduce;
 }
 
-/*
-Produce* populateProduce(){
-    Produce* produceAisle = new Produce[STORE_LENGTH];
+Deli* populateDeli(){
+    // get random lines
+    string* data = getRandomLinesFromFile(DELI_FILE_PATH, DELI_READ_LINES - 1, STORE_LENGTH);
+    Deli* pDeli = new Deli[STORE_LENGTH];
 
-    ifstream produceIn(PRODUCE_FILE_PATH, ios::in);
-    string produceName, produceCost, produceType, trash = "";
-
-    // ADD FAIL CHECK
-
-    int index, lineCount = 0;
-    int* keys = shuffleKeysFromFile(STORE_LENGTH, PRODUCE_READ_LINES, PRODUCE_FILE_PATH);
-
-    // POPULATE PRODUCE
-    while(!produceIn.eof()){
-        // ensure index does not surpass array const length
-        if(index >= STORE_LENGTH) break;
-
-        // get name, cost, and type from file
-        getline(produceIn, produceName);
-        lineCount++;
-
-        // Does the line count match a key?
-        if(!containsValue(keys, lineCount, STORE_LENGTH)) continue;
-
-        getline(produceIn, produceCost);
-        getline(produceIn, produceType);
-
-        ProduceType produceTypeKey;
-        // match produce type. replace with a try catch statement later
-        for(int i = 0; i < sizeof(PRODUCE_STRINGS); i++){
-            if(PRODUCE_STRINGS[i] == produceType){
-                produceTypeKey = (ProduceType)i;
-            }
-        }
-        // create new food
-        produceAisle[index] = *new Produce(produceName, stod(produceCost), produceTypeKey);
-
-        // put empty seperator line in trash and iterate index
-        getline(produceIn, trash);
-        index++;
-        lineCount += PRODUCE_READ_LINES - 1;
+    int deliIndex = 0;
+    // Store the data in the pDeli array
+    for(int i = 0; i < STORE_LENGTH * (DELI_READ_LINES - 1); i += (DELI_READ_LINES - 1)){
+        // store data. because of how the loop functions this will not break
+        pDeli[deliIndex] = *new Deli(data[i], stod(data[i + 1]), stod(data[i + 2]));
+        deliIndex++;
     }
 
-    // deallocate and close file
-    delete[] keys;
-    produceIn.close();
+    return pDeli;
+}
 
-    return produceAisle;
-}*/
+Frozen* populateFrozen(){
+    // get random lines
+    string* data = getRandomLinesFromFile(FROZEN_FILE_PATH, FROZEN_READ_LINES - 1, STORE_LENGTH);
+    Frozen* pFrozen = new Frozen[STORE_LENGTH];
+
+    int frozenIndex = 0;
+    // Store the data in the pFrozen array
+    for(int i = 0; i < STORE_LENGTH * (FROZEN_READ_LINES - 1); i += (FROZEN_READ_LINES - 1)){
+        // store data. because of how the loop functions this will not break
+        pFrozen[frozenIndex] = *new Frozen(data[i], stod(data[i + 1]), stoi(data[i + 2]), stoi(data[i + 3]));
+        frozenIndex++;
+    }
+
+    return pFrozen;
+}
+
 
 Store::~Store() {
     // deallocate arrays
