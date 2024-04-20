@@ -5,11 +5,11 @@
 #include "store.h"
 #include "food.h"
 #include <fstream>
-#include <cstring>
 
 // constants
 const int STORE_LENGTH = 10;
 const int PRODUCE_READ_LINES = 4;
+const int DAIRY_READ_LINES = 4;
 const int DELI_READ_LINES = 4;
 const int FROZEN_READ_LINES = 5;
 
@@ -23,6 +23,7 @@ bool containsValue(int* arr, int value, int size);
 string* getRandomLinesFromFile(string path, int linesToRead);
 
 Produce* populateProduce();
+Dairy* populateDairy();
 Deli* populateDeli();
 Frozen* populateFrozen();
 
@@ -30,12 +31,12 @@ Frozen* populateFrozen();
 Store::Store() {
     // initialize arrays
     produceAisle = populateProduce();
-    //dairyAisle = populateDairy();
+    dairyAisle = populateDairy();
     deliAisle = populateDeli();
     frozenAisle = populateFrozen();
 
     for(int i = 0; i < 10; i++){
-        cout << frozenAisle[i].print() << endl;
+        cout << dairyAisle[i].print() << endl;
     }
 }
 
@@ -45,6 +46,7 @@ Store::Store() {
  * - From that key, a loop will go through the file and match the line with the key.
  * - If there is a match, record
  */
+
 string* getRandomLinesFromFile(string path, int linesToRead, int lineCap){
     // open file
     ifstream fileIn(path, ios::in);
@@ -101,6 +103,22 @@ Produce* populateProduce(){
         produceIndex++;
     }
     return pProduce;
+}
+
+Dairy* populateDairy(){
+    // get random lines
+    string* data = getRandomLinesFromFile(DAIRY_FILE_PATH, DAIRY_READ_LINES - 1, STORE_LENGTH);
+    Dairy* pDairy = new Dairy[STORE_LENGTH];
+
+    int dairyIndex = 0;
+    // Store the data in the pDairy array
+    for(int i = 0; i < STORE_LENGTH * (DAIRY_READ_LINES - 1); i += (DAIRY_READ_LINES - 1)){
+        // store data. because of how the loop functions this will not break
+        pDairy[dairyIndex] = *new Dairy(data[i], stod(data[i + 1]), stoi(data[i + 2]));
+        dairyIndex++;
+    }
+
+    return pDairy;
 }
 
 Deli* populateDeli(){
