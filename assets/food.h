@@ -8,9 +8,6 @@
 
 using namespace std;
 
-const string PRODUCE_PATH = "produce.txt";
-const int MAX_STORE_LENGTH = 10;
-
 enum ProduceType{ FRUIT, EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, FUNGUS, UNDEFINED = -1 };
 const string PRODUCE_STRINGS[] = { "Fruit", "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Fungus" };
 
