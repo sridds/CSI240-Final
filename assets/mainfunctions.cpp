@@ -7,7 +7,7 @@
 #include <string>
 #include <vector>
 #include <limits>
-#include <conio.h>
+//#include <conio.h>
 #include "stdlib.h"
 #include "user.h"
 #include "mainfunctions.h"
@@ -170,5 +170,5 @@ void PrintUserStats(User user) {
 
     cout << "Press Enter to return to the last menu.\n" << endl;
 
-    getch();
+    //getch();
 }

@@ -8,7 +8,15 @@
 #include <cstring>
 
 const int STORE_LENGTH = 10;
+const int PRODUCE_SKIP_LINES = 4;
+
+const string PRODUCE_FILE_PATH = "produce.txt";
+const string DAIRY_FILE_PATH = "produce.txt";
+const string DELI_FILE_PATH = "produce.txt";
+const string FROZEN_FILE_PATH = "produce.txt";
+
 int* shuffleKeysFromFile(int size, int linesToSkip, string filePath);
+bool containsValue(int* arr, int value, int size);
 
 // Defines a store with provided dimensions w and h
 Store::Store() {
@@ -23,16 +31,22 @@ Store::Store() {
 
     // ADD FAIL CHECK
 
-    // read in
     int index = 0;
-    shuffleKeysFromFile(10, 4, "produce.txt");
+    int lineCount = 0;
+    int* keys = shuffleKeysFromFile(STORE_LENGTH, PRODUCE_SKIP_LINES, PRODUCE_FILE_PATH);
 
+    // POPULATE PRODUCE
     while(!produceIn.eof()){
         // ensure index does not surpass array const length
         if(index >= STORE_LENGTH) break;
 
         // get name, cost, and type from file
         getline(produceIn, produceName);
+        lineCount++;
+
+        // Does the line count match a key?
+        if(!containsValue(keys, lineCount, STORE_LENGTH)) continue;
+
         getline(produceIn, produceCost);
         getline(produceIn, produceType);
 
@@ -49,9 +63,24 @@ Store::Store() {
         // put empty seperator line in trash and iterate index
         getline(produceIn, trash);
         index++;
+        lineCount += PRODUCE_SKIP_LINES - 1;
+    }
+
+    delete[] keys;
+
+    for(int i = 0; i < 10; i++){
+        cout << produceAisle[i].print() << endl;
     }
 
     produceIn.close();
+}
+
+Store::~Store() {
+    // deallocate arrays
+    delete[] produceAisle;
+    delete[] dairyAisle;
+    delete[] deliAisle;
+    delete[] frozenAisle;
 }
 
 // helper function that checks the array to match values

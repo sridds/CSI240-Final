@@ -7,11 +7,15 @@
 #include <vector>
 #include "user.h"
 #include "mainfunctions.h"
+#include "store.h"
 
 using namespace std;
 
 int main()
 {
+    Store* store = new Store();
+    delete store;
+    /*
     vector<User> userList = readUsersToVector("userinfo.txt");
     int choice;
     string loggedInUsername;
