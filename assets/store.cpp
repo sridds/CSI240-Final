@@ -78,6 +78,7 @@ string* getRandomLinesFromFile(string path, int linesToRead, int lineCap){
         lineCount += linesToRead;
     }
 
+    delete[] keys;
     return data;
 }
 
@@ -102,6 +103,8 @@ Produce* populateProduce(){
         pProduce[produceIndex] = *new Produce(data[i], stod(data[i + 1]), typeKey);
         produceIndex++;
     }
+
+    delete[] data;
     return pProduce;
 }
 
@@ -118,6 +121,7 @@ Dairy* populateDairy(){
         dairyIndex++;
     }
 
+    delete[] data;
     return pDairy;
 }
 
@@ -134,6 +138,7 @@ Deli* populateDeli(){
         deliIndex++;
     }
 
+    delete[] data;
     return pDeli;
 }
 
@@ -150,6 +155,7 @@ Frozen* populateFrozen(){
         frozenIndex++;
     }
 
+    delete[] data;
     return pFrozen;
 }
 
