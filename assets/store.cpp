@@ -13,13 +13,12 @@ bool containsValue(T* arr, T value, int size);
  * ~ store: A constant reference that will be used to select items from
  * ~ listLength: A variable that will determine how long the shopping list will be
  * Since Food is an abstract class, a double pointer is returned */
-Food** getGroceryList(const Store& store, int listLength){
+Food** Store::setupGroceryList(int listLength){
     Food** list = new Food*[listLength];
 
     // Create the shopping list
     for(int i = 0; i < listLength; i++){
         Food* item;
-
         // Continue until unique item found
         do{
             // Select a random file
@@ -29,16 +28,16 @@ Food** getGroceryList(const Store& store, int listLength){
             // Switch on random value and get a value from the corresponding file
             switch(randFile){
                 case 0:
-                    item = &store.getProduceAisle()[val];
+                    item = &getProduceAisle()[val];
                     break;
                 case 1:
-                    item = &store.getFrozenAisle()[val];
+                    item = &getFrozenAisle()[val];
                     break;
                 case 2:
-                    item = &store.getDeliAisle()[val];
+                    item = &getDeliAisle()[val];
                     break;
                 case 3:
-                    item = &store.getDairyAisle()[val];
+                    item = &getDairyAisle()[val];
                     break;
             }
         } while(containsValue(list, item, STORE_LENGTH));
@@ -50,18 +49,39 @@ Food** getGroceryList(const Store& store, int listLength){
     return list;
 }
 
+/* This is a helper method that checks if all items on the grocery list have been found. */
+bool Store::isGroceryListComplete() const {
+    // loop through the store, if any are not collected, return false
+    for(int i = 0; i < STORE_LENGTH; i++){
+        if(groceryList[i]->getIsCollected() == false) return false;
+    }
+
+    return true;
+}
+
+/* This function attempts to collect a grocery item and mark it as collected */
+bool Store::tryCollectGroceryItem(Food* item) {
+    // loop through array and compare if the items match
+    for(int i = 0; i < STORE_LENGTH; i++){
+        if(*item == *groceryList[i]){
+            // set the item as collected
+            groceryList[i]->setIsCollected(true);
+            return true;
+        }
+    }
+    return true;
+}
+
 // This constructor is responsible for initalizing the aisle pointer arrays
 Store::Store() {
     produceAisle = populateProduce();
     dairyAisle = populateDairy();
     deliAisle = populateDeli();
     frozenAisle = populateFrozen();
+    groceryList = setupGroceryList(STORE_LENGTH);
 
-    /*
-    Food** foods = getGroceryList(*this, STORE_LENGTH);
-
-    for(int i = 0; i < STORE_LENGTH; i++){
-        cout << foods[i]->print() << endl;
+    /*for(int i = 0; i < STORE_LENGTH; i++){
+        cout << groceryList[i]->print() << endl;
     }*/
 }
 
@@ -243,7 +263,7 @@ int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
         count++;
     }
 
-    srand(time(NULL));
+    //srand(time(NULL));
     int* keys = new int[size];
 
     for(int i = 0; i < size; i++){
@@ -262,6 +282,7 @@ int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
     return keys;
 }
 
+Food** Store::getGroceryList() const { return groceryList; }
 Produce* Store::getProduceAisle() const { return produceAisle; }
 Dairy* Store::getDairyAisle() const { return dairyAisle; }
 Deli* Store::getDeliAisle() const { return deliAisle; }

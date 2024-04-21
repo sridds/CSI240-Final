@@ -15,6 +15,8 @@ const int FILES_TO_READ = 4;
 
 class Store {
 private:
+    Food** groceryList;
+
     // aisle references
     Produce* produceAisle;
     Dairy* dairyAisle;
@@ -23,6 +25,7 @@ private:
 
     int* shuffleKeysFromFile(int size, int linesToSkip, string filePath);
     string* getRandomLinesFromFile(string path, int linesToRead, int lineCap);
+    Food** setupGroceryList(int listLength);
 
     Produce* populateProduce();
     Dairy* populateDairy();
@@ -44,10 +47,16 @@ public:
     Store();
     ~Store();
 
+    // getters
+    Food** getGroceryList() const;
     Produce* getProduceAisle() const;
     Dairy* getDairyAisle() const;
     Deli* getDeliAisle() const;
     Frozen* getFrozenAisle() const;
+
+    // methods
+    bool isGroceryListComplete() const;
+    bool tryCollectGroceryItem(Food* item);
 };
 
 #endif //MYPROJECT_STORE_H

@@ -15,6 +15,7 @@ class Food {
 protected:
     string name;
     double price;
+    bool isCollected;
 
 public:
     // constructors
@@ -22,17 +23,18 @@ public:
     Food(string name, double price);
 
     // getters
-    string getName();
-    double getPrice();
+    string getName() const;
+    double getPrice() const;
+    bool getIsCollected() const;
+
+    // setters
+    void setIsCollected(bool isCollected);
 
     // methods
     virtual string print() = 0;
 
     // checks equality based on name
-    template <typename T>
-    friend bool operator==(const T& a, const T& b){
-        return a.name == b.name;
-    }
+    bool operator==(const Food& other) const;
 };
 
 class Produce : public Food {

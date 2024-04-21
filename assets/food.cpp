@@ -13,6 +13,10 @@ Food::Food(){
     price = 0.0;
 }
 
+bool Food::operator==(const Food& other) const{
+    return name == other.getName();
+}
+
 Produce::Produce() : Food("null", 0.0){
     type = UNDEFINED;
 }
@@ -31,10 +35,13 @@ Frozen::Frozen() : Food("null", 0.0){
 Food::Food(string name, double price){
     this->name = name;
     this->price = price;
+    this->isCollected = false;
 }
 
-string Food::getName() { return name; }
-double Food::getPrice() { return price; }
+string Food::getName() const { return name; }
+double Food::getPrice() const { return price; }
+bool Food::getIsCollected() const { return isCollected; }
+void Food::setIsCollected(bool isCollected) { this->isCollected = isCollected; }
 
 /* PRODUCE */
 
