@@ -34,6 +34,7 @@ public:
     void setItemsCollected(int totalItems);
     void setMoneySpent(double totalMoney);
 
+    bool updateStats(int totalGames, int totalItems, double totalMoney, int seconds);
 
     // default constructor
     User();

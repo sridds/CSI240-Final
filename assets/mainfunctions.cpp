@@ -62,6 +62,7 @@ string PromptLogin(vector<User> list)
         cin >> user;
         cout << "Enter your password: " << endl;
         cin >> pass;
+        cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
         for (int i = 0; i < list.size(); i++)
         {
@@ -182,8 +183,8 @@ User CreateNewUser(vector<User> list)
 
     ofstream stream("userinfo.txt", ios::app);
 
-    stream << endl << username << endl << password << endl << "0" << endl << "0"
-    << endl << "0" << endl << "99999";
+    stream << username << endl << password << endl << "0" << endl << "0"
+    << endl << "0" << endl << "99999" << endl;
 
     User newUser = User(username, password, 0, 0, 0, 99999);
 

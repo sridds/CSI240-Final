@@ -4,6 +4,7 @@
 
 #include "user.h"
 #include <string>
+#include <fstream>
 
 using namespace std;
 
@@ -65,5 +66,51 @@ void User::setGamesPlayed(int totalGames) { gamesPlayed = totalGames; }
 void User::setItemsCollected(int totalItems) { itemsCollected = totalItems; }
 
 void User::setMoneySpent(double totalMoney) { moneySpent = totalMoney; }
+
+bool User::updateStats(int totalGames, int totalItems, double totalMoney, int seconds)
+{
+    bool newBest;
+    gamesPlayed += totalGames;
+    itemsCollected += totalItems;
+    moneySpent += totalMoney;
+
+    if (seconds < bestTime)
+    {
+        bestTime = seconds;
+        newBest = true;
+    }
+
+    ifstream stream("userinfo.txt");
+    ofstream temp("temp.txt");
+
+    string replace;
+
+    bool found = false;
+
+    while (stream >> replace)
+    {
+        if (replace == username && !found)
+        {
+            temp << username << endl << password << endl << gamesPlayed << endl << itemsCollected
+            << endl << moneySpent << endl << bestTime << endl;
+            found = true;
+
+            for (int i = 0; i < 5; i++)
+                stream >> replace;
+        }
+        else
+        {
+            temp << replace << endl;
+        }
+    }
+
+    stream.close();
+    temp.close();
+
+    remove("userinfo.txt");
+    rename("temp.txt", "userinfo.txt");
+
+    return newBest;
+}
 
 
