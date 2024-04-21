@@ -11,6 +11,7 @@ using namespace std;
 
 // constants
 const int STORE_LENGTH = 10;
+const int FILES_TO_READ = 4;
 
 class Store {
 private:
