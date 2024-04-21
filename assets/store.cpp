@@ -6,26 +6,43 @@
 #include "food.h"
 #include <fstream>
 
-// constants
-const int STORE_LENGTH = 10;
-const int PRODUCE_READ_LINES = 4;
-const int DAIRY_READ_LINES = 4;
-const int DELI_READ_LINES = 4;
-const int FROZEN_READ_LINES = 5;
+template<typename T>
+bool containsValue(T* arr, T value, int size);
 
-const string PRODUCE_FILE_PATH = "produce.txt";
-const string DAIRY_FILE_PATH = "dairy.txt";
-const string DELI_FILE_PATH = "deli.txt";
-const string FROZEN_FILE_PATH = "frozen.txt";
+Food** getGroceryList(const Store& store, int listLength){
+    Food** list = new Food*[listLength];
 
-int* shuffleKeysFromFile(int size, int linesToSkip, string filePath);
-bool containsValue(int* arr, int value, int size);
-string* getRandomLinesFromFile(string path, int linesToRead);
+    for(int i = 0; i < listLength; i++){
+        Food* item;
 
-Produce* populateProduce();
-Dairy* populateDairy();
-Deli* populateDeli();
-Frozen* populateFrozen();
+        // Continue until unique item found
+        do{
+            // chooses file
+            int randFile = rand()%(3 + 1);
+            int val = (rand() % STORE_LENGTH);
+
+            // switch on file and select random item from file
+            switch(randFile){
+                case 0:
+                    item = &store.getProduceAisle()[val];
+                    break;
+                case 1:
+                    item = &store.getFrozenAisle()[val];
+                    break;
+                case 2:
+                    item = &store.getDeliAisle()[val];
+                    break;
+                case 3:
+                    item = &store.getDairyAisle()[val];
+                    break;
+            }
+        } while(containsValue(list, item, STORE_LENGTH));
+
+        list[i] = item;
+    }
+
+    return list;
+}
 
 // Defines a store with provided dimensions w and h
 Store::Store() {
@@ -35,8 +52,10 @@ Store::Store() {
     deliAisle = populateDeli();
     frozenAisle = populateFrozen();
 
-    for(int i = 0; i < 10; i++){
-        cout << dairyAisle[i].print() << endl;
+    Food** foods = getGroceryList(*this, STORE_LENGTH);
+
+    for(int i = 0; i < STORE_LENGTH; i++){
+        cout << foods[i]->print() << endl;
     }
 }
 
@@ -47,7 +66,7 @@ Store::Store() {
  * - If there is a match, record
  */
 
-string* getRandomLinesFromFile(string path, int linesToRead, int lineCap){
+string* Store::getRandomLinesFromFile(string path, int linesToRead, int lineCap){
     // open file
     ifstream fileIn(path, ios::in);
 
@@ -82,7 +101,7 @@ string* getRandomLinesFromFile(string path, int linesToRead, int lineCap){
     return data;
 }
 
-Produce* populateProduce(){
+Produce* Store::populateProduce(){
     // get random lines
     string* data = getRandomLinesFromFile(PRODUCE_FILE_PATH, PRODUCE_READ_LINES - 1, STORE_LENGTH);
     Produce* pProduce = new Produce[STORE_LENGTH];
@@ -108,7 +127,7 @@ Produce* populateProduce(){
     return pProduce;
 }
 
-Dairy* populateDairy(){
+Dairy* Store::populateDairy(){
     // get random lines
     string* data = getRandomLinesFromFile(DAIRY_FILE_PATH, DAIRY_READ_LINES - 1, STORE_LENGTH);
     Dairy* pDairy = new Dairy[STORE_LENGTH];
@@ -125,7 +144,7 @@ Dairy* populateDairy(){
     return pDairy;
 }
 
-Deli* populateDeli(){
+Deli* Store::populateDeli(){
     // get random lines
     string* data = getRandomLinesFromFile(DELI_FILE_PATH, DELI_READ_LINES - 1, STORE_LENGTH);
     Deli* pDeli = new Deli[STORE_LENGTH];
@@ -142,7 +161,7 @@ Deli* populateDeli(){
     return pDeli;
 }
 
-Frozen* populateFrozen(){
+Frozen* Store::populateFrozen(){
     // get random lines
     string* data = getRandomLinesFromFile(FROZEN_FILE_PATH, FROZEN_READ_LINES - 1, STORE_LENGTH);
     Frozen* pFrozen = new Frozen[STORE_LENGTH];
@@ -169,7 +188,8 @@ Store::~Store() {
 }
 
 // helper function that checks the array to match values
-bool containsValue(int* arr, int value, int size){
+template<typename T>
+bool containsValue(T* arr, T value, int size){
     for(int i = 0; i < size; i++){
         if(arr[i] == value){
             return true;
@@ -185,7 +205,7 @@ bool containsValue(int* arr, int value, int size){
  * param - linesToSkip indicates the amount of lines to skip each iteration. This is because some files have more data per item than others
  * param - filePath indicates which file to look through
  */
-int* shuffleKeysFromFile(int size, int linesToSkip, string filePath){
+int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
     // get file
     ifstream fileIn(filePath, ios::in);
 
@@ -222,3 +242,8 @@ int* shuffleKeysFromFile(int size, int linesToSkip, string filePath){
     fileIn.close();
     return keys;
 }
+
+Produce* Store::getProduceAisle() const { return produceAisle; }
+Dairy* Store::getDairyAisle() const { return dairyAisle; }
+Deli* Store::getDeliAisle() const { return deliAisle; }
+Frozen* Store::getFrozenAisle() const { return frozenAisle; }
