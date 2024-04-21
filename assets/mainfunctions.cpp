@@ -10,13 +10,15 @@
 #include "user.h"
 #include "mainfunctions.h"
 
-vector<User> readUsersToVector(string filename)
+// reads the user info text file, creating a user object for each user, and assigning the proper statistics
+vector<User> readUsersToVector()
 {
     ifstream stream;
     vector<User> users;
 
-    stream.open("userinfo.txt", ios::in);
+    stream.open(USER_INFO_FILE, ios::in);
 
+    // file check
     if (stream.fail())
     {
         cout << "Failed to open user file!";
@@ -31,6 +33,7 @@ vector<User> readUsersToVector(string filename)
 
     while(!stream.eof())
     {
+        // grab and store all values of a user
         getline(stream, uname);
         getline(stream, pword);
         getline(stream, temp);
@@ -42,15 +45,16 @@ vector<User> readUsersToVector(string filename)
         getline(stream, temp);
         seconds = stoi(temp);
 
-
+        // place newly created user into the vector
         users.push_back(User(uname, pword, totalGames, totalItems, moneySpent, seconds));
     }
 
+    // close and return
     stream.close();
-
     return users;
 }
 
+// prompt the user with the login system, and return the username of who signed in
 string PromptLogin(vector<User> list)
 {
     string user, pass;
@@ -64,6 +68,7 @@ string PromptLogin(vector<User> list)
         cin >> pass;
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
+        // check if both the username and the password are correct and correlating to a user in the vector
         for (int i = 0; i < list.size(); i++)
         {
             if (user == list[i].getUsername())
@@ -76,6 +81,7 @@ string PromptLogin(vector<User> list)
             }
         }
 
+        // retry login if failed
         if (!loggedIn)
         {
             cout << "You have entered an incorrect username and/or password. Please try again." << endl;
@@ -87,11 +93,13 @@ string PromptLogin(vector<User> list)
     return user;
 }
 
+// prompt the user with the main menu choices, and return which they chose
 int PromptMainMenuChoice(vector<User> list)
 {
     int choice = 0;
     cout << "Welcome to the Grocery Game!" << endl;
 
+    // while they have not gotten a proper choice yet
     while (choice == 0)
     {
         cout << "Pick a number of what you'd like to do!\n" << endl;
@@ -99,15 +107,27 @@ int PromptMainMenuChoice(vector<User> list)
         cout << "1. Log In" << endl << "2. Create New Account" << endl << "3. Quit Program" << endl;
 
         cin >> choice;
-        cin.ignore (std::numeric_limits<std::streamsize>::max(), '\n');
 
-        if (!(!cin.fail() && choice > 0 && choice < 4))
+        // if the input isnt good
+        if (cin.fail())
+        {
+            choice = 0;
+            cout << "That was not a number, please pick a valid option between 1, 2, and 3." << endl;
+            // reset input
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else if (!(choice > 0 && choice < 4))
         {
             choice = 0;
             cout << "That was not a valid option, please pick a valid option between 1, 2, and 3." << endl;
+            // reset input
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 
+    // quit program if theyve chosen to do so
     if (choice == 3)
     {
         exit(0);
@@ -116,7 +136,7 @@ int PromptMainMenuChoice(vector<User> list)
     return choice;
 }
 
-
+// prompt the user with the options on the main menu
 int PromptLoggedInChoice()
 {
     int choice = 0;
@@ -130,16 +150,29 @@ int PromptLoggedInChoice()
 
         cin >> choice;
 
-        if (!(!cin.fail() && choice > 0 && choice < 5))
+        // if the input isnt good
+        if (cin.fail())
         {
             choice = 0;
-            cout << "That was not a valid option, please pick a valid option between 1, 2, and 3." << endl;
+            cout << "That was not a number, please pick a valid option between 1, 2, 3, and 4." << endl;
+            // reset input
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+        }
+        else if (!(choice > 0 && choice < 5))
+        {
+            choice = 0;
+            cout << "That was not a valid option, please pick a valid option between 1, 2, 3, and 4." << endl;
+            // reset input
+            cin.clear();
+            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
         }
     }
 
     return choice;
 }
 
+// creates a new user object, adds the user data to the text file, and returns the new user.
 User CreateNewUser(vector<User> list)
 {
     bool choice = false, userTaken = false;
@@ -152,6 +185,7 @@ User CreateNewUser(vector<User> list)
         getline(cin, username);
         cout << username << endl;
 
+        // testing if the username is already taken or not
         for (User &p : list)
         {
             if (p.getUsername() == username)
@@ -166,6 +200,7 @@ User CreateNewUser(vector<User> list)
             cout << "\nPlease enter the password you wish to use: " << endl;
             getline(cin, password);
 
+            // confirmation aspect for the user to choose if they've entered the right info
             cout << "You have chosen username: " << username << " and password: " << password << endl;
             cout << "Is this correct? (y/n)" << endl;
             cin >> yOrN;
@@ -181,25 +216,24 @@ User CreateNewUser(vector<User> list)
         }
     }
 
-    ofstream stream("userinfo.txt", ios::app);
+    // append the new user info to the end of the file
+    ofstream stream(USER_INFO_FILE, ios::app);
 
-    stream << username << endl << password << endl << "0" << endl << "0"
-    << endl << "0" << endl << "99999" << endl;
+    stream << username << endl << password << endl << DEFAULT_STATS;
 
     User newUser = User(username, password, 0, 0, 0, 99999);
 
     return newUser;
 }
 
+// print out the logged in user's statistics
 void PrintUserStats(User user) {
-    // default set time is 99999, which works out to 1666:39
-    const string DEFAULT_TIME = "1666:39";
-
     cout << "Statistics for user " << user.getUsername() << ".\n" << endl;
     cout << "Total Games Played: " << user.getGamesPlayed() << endl;
     cout << "Total Items Grabbed: " << user.getItemsCollected() << endl;
     cout << "Total Amount of Money Spent: " << user.getMoneySpent() << endl;
 
+    // if the user has not yet set a time, don't display the default time stored in the text file
     if (user.getBestTime() == DEFAULT_TIME) {
         cout << "No time has been set by the user.\n" << endl;
     }
@@ -208,5 +242,8 @@ void PrintUserStats(User user) {
         cout << "Best Time Overall: " << user.getBestTime() << "\n" << endl;
     }
 
-    system("pause");
+    cout << "Press Enter to continue." << endl;
+
+    cin.ignore();
+    cin.ignore();
 }

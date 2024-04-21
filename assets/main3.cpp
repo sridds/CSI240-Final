@@ -18,7 +18,7 @@ int main()
     delete store;
      */
 
-    vector<User> userList = readUsersToVector("userinfo.txt");
+    vector<User> userList = readUsersToVector();
     int choice;
     string loggedInUsername;
     User loggedInUser;

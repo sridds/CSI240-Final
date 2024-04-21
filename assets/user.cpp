@@ -70,23 +70,26 @@ void User::setMoneySpent(double totalMoney) { moneySpent = totalMoney; }
 bool User::updateStats(int totalGames, int totalItems, double totalMoney, int seconds)
 {
     bool newBest;
+    // update the user instance's stats
     gamesPlayed += totalGames;
     itemsCollected += totalItems;
     moneySpent += totalMoney;
 
+    // if its a new best time
     if (seconds < bestTime)
     {
         bestTime = seconds;
         newBest = true;
     }
 
-    ifstream stream("userinfo.txt");
+    ifstream stream(USER_INFO_FILE);
     ofstream temp("temp.txt");
 
     string replace;
 
     bool found = false;
 
+    // find the user in the text file, and rewrite their info with the new info
     while (stream >> replace)
     {
         if (replace == username && !found)
@@ -107,6 +110,7 @@ bool User::updateStats(int totalGames, int totalItems, double totalMoney, int se
     stream.close();
     temp.close();
 
+    // remove old file and rename new file
     remove("userinfo.txt");
     rename("temp.txt", "userinfo.txt");
 
