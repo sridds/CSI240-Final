@@ -6,9 +6,7 @@
 #include <sstream>
 #include <fstream>
 
-/*
- * FOOD
- */
+/* FOOD */
 
 Food::Food(){
     name = "null";
@@ -38,9 +36,7 @@ Food::Food(string name, double price){
 string Food::getName() { return name; }
 double Food::getPrice() { return price; }
 
-/*
- * PRODUCE
- */
+/* PRODUCE */
 
 Produce::Produce(string name, double price, ProduceType type) : Food(name, price){
     this->type = type;
@@ -50,14 +46,15 @@ ProduceType Produce::getProduceType() { return type; }
 
 string Produce::print() {
     stringstream stream;
-    stream << name + " ~ $" + to_string(price) + " ~ Type: " + PRODUCE_STRINGS[type];
+    stream.setf(ios::fixed, ios::floatfield);
+    stream.setf(ios::showpoint);
+    stream.precision(2);
+    stream << name << " $" << price << " (" << PRODUCE_STRINGS[type] << ")";
 
     return stream.str();
 }
 
-/*
- * DELI
- */
+/* DELI */
 
 Deli::Deli(string name, double price, double pounds) : Food(name, price){
     this->pounds = pounds;
@@ -69,14 +66,15 @@ double Deli::getPounds(){
 
 string Deli::print() {
     stringstream stream;
-    stream << name + " ~ $" + to_string(price) + " ~ Pounds: " + to_string(pounds);
+    stream.setf(ios::fixed, ios::floatfield);
+    stream.setf(ios::showpoint);
+    stream.precision(2);
+    stream << name + " $" << price << " (Pounds: " << pounds << ")";
 
     return stream.str();
 }
 
-/*
- * DAIRY
- */
+/* DAIRY */
 
 Dairy::Dairy(string name, double price, bool isSpoiled) : Food(name, price){
     this->isSpoiled = isSpoiled;
@@ -87,14 +85,17 @@ bool Dairy::getIsSpoiled() { return isSpoiled; }
 
 string Dairy::print() {
     stringstream stream;
-    stream << name + " ~ $" + to_string(price) + " ~ Spoiled: " + to_string(isSpoiled);
+    stream.setf(ios::fixed, ios::floatfield);
+    stream.setf(ios::showpoint);
+    stream.precision(2);
+
+    stream << name << " $" << price;
+    if(isSpoiled) stream << " (Spoiled)";
 
     return stream.str();
 }
 
-/*
- * FROZEN
- */
+/* FROZEN */
 
 Frozen::Frozen(string name, double price, bool isGlutenFree, bool isVegan) : Food(name, price){
     this->isGlutenFree = isGlutenFree;
@@ -106,7 +107,13 @@ bool Frozen::getIsVegan() { return isVegan; }
 
 string Frozen::print() {
     stringstream stream;
-    stream << name + " ~ $" + to_string(price) + " ~ Gluten Free: " + to_string(isGlutenFree) + " ~ Vegan: " +  to_string(isVegan);
+    stream.setf(ios::fixed, ios::floatfield);
+    stream.setf(ios::showpoint);
+    stream.precision(2);
+
+    stream << name << " $" << price;
+    if(isGlutenFree) stream << " (Gluten Free)";
+    if(isVegan) stream << " (Vegan)";
 
     return stream.str();
 }
