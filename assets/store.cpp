@@ -9,19 +9,24 @@
 template<typename T>
 bool containsValue(T* arr, T value, int size);
 
+/* The following code is responsible for generating a shopping list from a provided store reference
+ * ~ store: A constant reference that will be used to select items from
+ * ~ listLength: A variable that will determine how long the shopping list will be
+ * Since Food is an abstract class, a double pointer is returned */
 Food** getGroceryList(const Store& store, int listLength){
     Food** list = new Food*[listLength];
 
+    // Create the shopping list
     for(int i = 0; i < listLength; i++){
         Food* item;
 
         // Continue until unique item found
         do{
-            // chooses file
-            int randFile = rand()%(3 + 1);
+            // Select a random file
+            int randFile = rand()%(FILES_TO_READ);
             int val = (rand() % STORE_LENGTH);
 
-            // switch on file and select random item from file
+            // Switch on random value and get a value from the corresponding file
             switch(randFile){
                 case 0:
                     item = &store.getProduceAisle()[val];
@@ -38,48 +43,49 @@ Food** getGroceryList(const Store& store, int listLength){
             }
         } while(containsValue(list, item, STORE_LENGTH));
 
+        // Set the value after verified to be a unique file
         list[i] = item;
     }
 
     return list;
 }
 
-// Defines a store with provided dimensions w and h
+// This constructor is responsible for initalizing the aisle pointer arrays
 Store::Store() {
-    // initialize arrays
     produceAisle = populateProduce();
     dairyAisle = populateDairy();
     deliAisle = populateDeli();
     frozenAisle = populateFrozen();
 
+    /*
     Food** foods = getGroceryList(*this, STORE_LENGTH);
 
     for(int i = 0; i < STORE_LENGTH; i++){
         cout << foods[i]->print() << endl;
-    }
+    }*/
 }
 
-/*
- * This is a very specific function. In summary, the function does the following:
+/* This is a very specific function. In summary, the function does the following:
  * - Gets a list of random keys, each key indicating the start of a new data entry in the file
  * - From that key, a loop will go through the file and match the line with the key.
- * - If there is a match, record
- */
-
+ * - If there is a match, record */
 string* Store::getRandomLinesFromFile(string path, int linesToRead, int lineCap){
-    // open file
+    // Open file. If failed, return null
     ifstream fileIn(path, ios::in);
-
-    // fail check, return null
-    if(fileIn.fail()) return nullptr;
+    if(fileIn.fail()) {
+        fileIn.close();
+        return nullptr;
+    }
 
     string* data = new string[lineCap * linesToRead];
+    // Generate a list of random keys use to pick random lines from the file. Each key indicates the start of a new data entry
     int* keys = shuffleKeysFromFile(lineCap, linesToRead + 1, path);
     int index = 0, lineCount = 0;
     string trash;
 
     // Populate data
     while(!fileIn.eof()){
+        // Ensure the index does not exceed the line cap
         if(index >= lineCap) break;
 
         getline(fileIn, data[(index * (linesToRead))]);
@@ -97,12 +103,15 @@ string* Store::getRandomLinesFromFile(string path, int linesToRead, int lineCap)
         lineCount += linesToRead;
     }
 
+    // Ensure keys is deallocated before leaving the scope of the function
     delete[] keys;
     return data;
 }
 
+/* The following function is responsible for populating the Produce aisle with a bunch of random data from the file.
+ * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Produce* Store::populateProduce(){
-    // get random lines
+    // Get random lines using the helper function
     string* data = getRandomLinesFromFile(PRODUCE_FILE_PATH, PRODUCE_READ_LINES - 1, STORE_LENGTH);
     Produce* pProduce = new Produce[STORE_LENGTH];
 
@@ -111,6 +120,7 @@ Produce* Store::populateProduce(){
     // Store the data in the pProduce array
     for(int i = 0; i < STORE_LENGTH * (PRODUCE_READ_LINES - 1); i += (PRODUCE_READ_LINES - 1)){
 
+        // Converts the line to a produce type by comparing the line to every entry in PRODUCE_STRINGS
         ProduceType typeKey;
         for(int j = 0; j < sizeof(PRODUCE_STRINGS); j++){
             if(PRODUCE_STRINGS[j] == data[i + 2]){
@@ -118,15 +128,18 @@ Produce* Store::populateProduce(){
             }
         }
 
-        // store data. because of how the loop functions this will not break
+        // Store data. Because of how the loop functions this will not break
         pProduce[produceIndex] = *new Produce(data[i], stod(data[i + 1]), typeKey);
         produceIndex++;
     }
 
+    // Deallocate data before leaving function scope
     delete[] data;
     return pProduce;
 }
 
+/* The following function is responsible for populating the Dairy aisle with a bunch of random data from the file.
+ * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Dairy* Store::populateDairy(){
     // get random lines
     string* data = getRandomLinesFromFile(DAIRY_FILE_PATH, DAIRY_READ_LINES - 1, STORE_LENGTH);
@@ -140,10 +153,13 @@ Dairy* Store::populateDairy(){
         dairyIndex++;
     }
 
+    // Deallocate data
     delete[] data;
     return pDairy;
 }
 
+/* The following function is responsible for populating the Deli aisle with a bunch of random data from the file.
+ * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Deli* Store::populateDeli(){
     // get random lines
     string* data = getRandomLinesFromFile(DELI_FILE_PATH, DELI_READ_LINES - 1, STORE_LENGTH);
@@ -161,6 +177,8 @@ Deli* Store::populateDeli(){
     return pDeli;
 }
 
+/* The following function is responsible for populating the Frozen aisle with a bunch of random data from the file.
+ * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Frozen* Store::populateFrozen(){
     // get random lines
     string* data = getRandomLinesFromFile(FROZEN_FILE_PATH, FROZEN_READ_LINES - 1, STORE_LENGTH);
@@ -178,7 +196,7 @@ Frozen* Store::populateFrozen(){
     return pFrozen;
 }
 
-
+// This destructor primarily handles the deallocation of aisles to ensure proper cleanup.
 Store::~Store() {
     // deallocate arrays
     delete[] produceAisle;
@@ -187,7 +205,7 @@ Store::~Store() {
     delete[] frozenAisle;
 }
 
-// helper function that checks the array to match values
+// Helper function that checks if a pointer array contains a value. Works with any type
 template<typename T>
 bool containsValue(T* arr, T value, int size){
     for(int i = 0; i < size; i++){
@@ -202,6 +220,7 @@ bool containsValue(T* arr, T value, int size){
 /*
  * While the files have roughly 30 elements, the program only selects 10. Because of this, we must shuffle the file around.
  * Rather than shuffling the entire file around, the following function returns a pointer containing all the line keys.
+ * A line key refers to the start of each data entry. With a key, we can use a loop to go through the file again later and compare the current line with the key.
  * param - linesToSkip indicates the amount of lines to skip each iteration. This is because some files have more data per item than others
  * param - filePath indicates which file to look through
  */
@@ -225,8 +244,8 @@ int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
     }
 
     srand(time(NULL));
-
     int* keys = new int[size];
+
     for(int i = 0; i < size; i++){
         int val = 0;
         do{
