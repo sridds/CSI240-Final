@@ -56,7 +56,9 @@ string Produce::print() {
     stream.setf(ios::fixed, ios::floatfield);
     stream.setf(ios::showpoint);
     stream.precision(2);
-    stream << name << " $" << price << " (" << PRODUCE_STRINGS[type] << ")";
+
+    if(isCollected) stream << "(COLLECTED)";
+    else stream << name << " $" << price << " (" << PRODUCE_STRINGS[type] << ")";
 
     return stream.str();
 }
@@ -96,8 +98,11 @@ string Dairy::print() {
     stream.setf(ios::showpoint);
     stream.precision(2);
 
-    stream << name << " $" << price;
-    if(isSpoiled) stream << " (Spoiled)";
+    if(isCollected) stream << "(COLLECTED)";
+    else{
+        stream << name << " $" << price;
+        if(isSpoiled) stream << " (Spoiled)";
+    }
 
     return stream.str();
 }
@@ -118,9 +123,12 @@ string Frozen::print() {
     stream.setf(ios::showpoint);
     stream.precision(2);
 
-    stream << name << " $" << price;
-    if(isGlutenFree) stream << " (Gluten Free)";
-    if(isVegan) stream << " (Vegan)";
+    if(isCollected) stream << "(COLLECTED)";
+    else{
+        stream << name << " $" << price;
+        if(isGlutenFree) stream << " (Gluten Free)";
+        if(isVegan) stream << " (Vegan)";
+    }
 
     return stream.str();
 }

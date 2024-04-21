@@ -5,6 +5,7 @@
 #include "store.h"
 #include "food.h"
 #include <fstream>
+#include <sstream>
 
 template<typename T>
 bool containsValue(T* arr, T value, int size);
@@ -80,6 +81,7 @@ Store::Store() {
     frozenAisle = populateFrozen();
     groceryList = setupGroceryList(STORE_LENGTH);
 
+    cout << *this;
     /*for(int i = 0; i < STORE_LENGTH; i++){
         cout << groceryList[i]->print() << endl;
     }*/
@@ -263,7 +265,7 @@ int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
         count++;
     }
 
-    //srand(time(NULL));
+    srand(time(NULL));
     int* keys = new int[size];
 
     for(int i = 0; i < size; i++){
@@ -287,3 +289,32 @@ Produce* Store::getProduceAisle() const { return produceAisle; }
 Dairy* Store::getDairyAisle() const { return dairyAisle; }
 Deli* Store::getDeliAisle() const { return deliAisle; }
 Frozen* Store::getFrozenAisle() const { return frozenAisle; }
+
+string Store::printProduceAisle(){
+    stringstream stream;
+    for(int i = 0; i < STORE_LENGTH; i++){
+        stream << produceAisle[i].print() << endl;
+    }
+    return stream.str();
+}
+string Store::printDairyAisle(){
+    stringstream stream;
+    for(int i = 0; i < STORE_LENGTH; i++){
+        stream << dairyAisle[i].print() << endl;
+    }
+    return stream.str();
+}
+string Store::printDeliAisle(){
+    stringstream stream;
+    for(int i = 0; i < STORE_LENGTH; i++){
+        stream << deliAisle[i].print() << endl;
+    }
+    return stream.str();
+}
+string Store::printFrozenAisle(){
+    stringstream stream;
+    for(int i = 0; i < STORE_LENGTH; i++){
+        stream << frozenAisle[i].print() << endl;
+    }
+    return stream.str();
+}

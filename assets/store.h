@@ -57,6 +57,20 @@ public:
     // methods
     bool isGroceryListComplete() const;
     bool tryCollectGroceryItem(Food* item);
+
+    string printProduceAisle();
+    string printDairyAisle();
+    string printDeliAisle();
+    string printFrozenAisle();
+
+    /* Using a friend operator, attempting to print the store in a stream will output the full shopping list */
+    friend std::ostream& operator<<(std::ostream& stream, const Store& store){
+        for(int i = 0; i < STORE_LENGTH; i++){
+            stream << store.getGroceryList()[i]->print() << endl;
+        }
+
+        return stream;
+    }
 };
 
 #endif //MYPROJECT_STORE_H
