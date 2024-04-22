@@ -69,7 +69,6 @@ int main()
                     // 4. Quit Program
                     delete store;
                     exit(0);
-                    break;
                 default:
                     break;
             }
