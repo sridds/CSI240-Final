@@ -250,9 +250,9 @@ void PrintUserStats(User user) {
     cin.ignore();
 }
 
-int StartGame(Store *store)
+void StartGame(Store *store, User user)
 {
-    int choice = 0, checkoutCase;
+    int choice = 0, checkoutCase, penalties = 0;
     bool game = true, loop = true, inAisle = true;
     // statistics variables
     int itemsCollected = 0, moneySpent = 0;
@@ -340,6 +340,7 @@ int StartGame(Store *store)
                             else
                             {
                                 cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                penalties++;
                                 cin.ignore();
                                 choice = 0;
                             }
@@ -498,7 +499,8 @@ int StartGame(Store *store)
                             break;
                         case 2:
                             // checking out with completing the list
-                            cout << "winner" << endl;
+                            cout << "That was all your items!" << endl;
+                            game = false;
                             break;
                         default:
                             break;
@@ -508,16 +510,30 @@ int StartGame(Store *store)
                     break;
             }
         }
-        cout << "you left the loop" << endl;
     }
-
 
     auto stop = std::chrono::steady_clock::now();
 
-    // getting time
+    // the time from the start - the time from the stop gives us the total time in seconds
     int time = (int)duration_cast<std::chrono::seconds>(stop - start).count();
 
-    return time;
+    time += (penalties * PENALTY_MULTIPLIER);
+
+    // switch totalMoney parameter to getMoneyOfList function that has not yet been made
+    bool newBestTime = user.updateStats(1, ITEMS_IN_LIST, 100.00, time);
+
+    if (time % 60 >= 10)
+        cout << "You completed the game with a time of " << time / 60 << ":" << time % 60 << "!" << endl;
+    else
+        cout << "You completed the game with a time of " << time / 60 << ":0" << time % 60 << "!" << endl;
+
+    if (newBestTime)
+        cout << "That's a new best time, congratulations!\n" << endl;
+    else
+        cout << "That did not beat your best time of " << user.getBestTime() << ".\n" << endl;
+
+    cout << "Press Enter to return to the main menu.\n" << endl;
+    cin.ignore();
 }
 
 int Checkout(Store *store)

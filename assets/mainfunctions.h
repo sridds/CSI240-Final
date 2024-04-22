@@ -9,6 +9,9 @@
 
 using namespace std;
 
+const int ITEMS_IN_LIST = 10;
+const int PENALTY_MULTIPLIER = 5;
+
 // reads the userinfo.txt file into user instances, which are put into a vector
 vector<User> readUsersToVector();
 
@@ -28,7 +31,7 @@ User CreateNewUser(vector<User> list);
 void PrintUserStats(User user);
 
 // starts the game
-int StartGame(Store *store);
+void StartGame(Store *store, User user);
 
 // returns either 0, 1, or 2, based on whether the user's shopping list has been completed
 // 0 represents the user selecting to not checkout
