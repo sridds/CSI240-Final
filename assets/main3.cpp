@@ -15,7 +15,6 @@ int main()
 {
     // deallocate!!!!!!!!!!!!!!!!!!!!
     Store *store = new Store();
-    store->printProduceAisle();
 
     vector<User> userList = readUsersToVector();
     int choice, time;
@@ -69,6 +68,7 @@ int main()
                     break;
                 case 4:
                     // 4. Quit Program
+                    delete store;
                     exit(0);
                     break;
                 default:

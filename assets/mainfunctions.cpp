@@ -253,7 +253,7 @@ void PrintUserStats(User user) {
 int StartGame(Store *store)
 {
     int choice = 0, checkoutCase;
-    bool game = true;
+    bool game = true, loop = true, inAisle = true;
     // statistics variables
     int itemsCollected = 0, moneySpent = 0;
 
@@ -300,18 +300,186 @@ int StartGame(Store *store)
             {
                 case 1:
                     // 1. View Shopping List
+                    cout << *store << endl << "Press Enter to return.\n" << endl;
+                    cin.ignore();
+                    cin.ignore();
+                    choice = 0;
                     break;
                 case 2:
                     // 2. Produce Aisle
+                    while (inAisle)
+                    {
+                        cout << store->printProduceAisle() << endl << "11. Return\n" << endl;
+                        cin >> choice;
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        if (cin.fail() || !(choice > 0 && choice < 12))
+                        {
+                            cout << "That is not a valid choice. Please pick a number from the list.\n" << endl;
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            choice = 0;
+                        }
+
+                        if (choice == 11)
+                        {
+                            choice = 0;
+                            cin.clear();
+                            inAisle = false;
+                        }
+                        else
+                        {
+                            bool itemOnList = store->tryCollectGroceryItem(&(store->getProduceAisle()[choice - 1]));
+
+                            if (itemOnList)
+                            {
+                                cout << "That one was on your list! Nice!" << endl << "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+                            else
+                            {
+                                cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+
+                            inAisle = true;
+                        }
+                    }
+                    inAisle = true;
                     break;
                 case 3:
                     // 3. Dairy Aisle
+                    while (inAisle)
+                    {
+                        cout << store->printDairyAisle() << endl << "11. Return\n" << endl;
+                        cin >> choice;
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        if (cin.fail() || !(choice > 0 && choice < 12))
+                        {
+                            cout << "That is not a valid choice. Please pick a number from the list.\n" << endl;
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            choice = 0;
+                        }
+
+                        if (choice == 11)
+                        {
+                            choice = 0;
+                            cin.clear();
+                            inAisle = false;
+                        }
+                        else
+                        {
+                            bool itemOnList = store->tryCollectGroceryItem(&(store->getDairyAisle()[choice - 1]));
+
+                            if (itemOnList)
+                            {
+                                cout << "That one was on your list! Nice!" << endl << "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+                            else
+                            {
+                                cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+
+                            inAisle = true;
+                        }
+                    }
+                    inAisle = true;
                     break;
                 case 4:
                     // 4. Deli Aisle
+                    while (inAisle)
+                    {
+                        cout << store->printDeliAisle() << endl << "11. Return\n" << endl;
+                        cin >> choice;
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        if (cin.fail() || !(choice > 0 && choice < 12))
+                        {
+                            cout << "That is not a valid choice. Please pick a number from the list.\n" << endl;
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            choice = 0;
+                        }
+
+                        if (choice == 11)
+                        {
+                            choice = 0;
+                            cin.clear();
+                            inAisle = false;
+                        }
+                        else
+                        {
+                            bool itemOnList = store->tryCollectGroceryItem(&(store->getDeliAisle()[choice - 1]));
+
+                            if (itemOnList)
+                            {
+                                cout << "That one was on your list! Nice!" << endl << "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+                            else
+                            {
+                                cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+
+                            inAisle = true;
+                        }
+                    }
+                    inAisle = true;
                     break;
                 case 5:
                     // 5. Frozen Aisle
+                    while (inAisle)
+                    {
+                        cout << store->printFrozenAisle() << endl << "11. Return\n" << endl;
+                        cin >> choice;
+                        cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+
+                        if (cin.fail() || !(choice > 0 && choice < 12))
+                        {
+                            cout << "That is not a valid choice. Please pick a number from the list.\n" << endl;
+                            cin.clear();
+                            cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                            choice = 0;
+                        }
+
+                        if (choice == 11)
+                        {
+                            choice = 0;
+                            cin.clear();
+                            inAisle = false;
+                        }
+                        else
+                        {
+                            bool itemOnList = store->tryCollectGroceryItem(&(store->getFrozenAisle()[choice - 1]));
+
+                            if (itemOnList)
+                            {
+                                cout << "That one was on your list! Nice!" << endl << "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+                            else
+                            {
+                                cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                cin.ignore();
+                                choice = 0;
+                            }
+
+                            inAisle = true;
+                        }
+                    }
+                    inAisle = true;
                     break;
                 case 6:
                     // 6. Checkout Counter
@@ -330,13 +498,17 @@ int StartGame(Store *store)
                             break;
                         case 2:
                             // checking out with completing the list
+                            cout << "winner" << endl;
                             break;
                         default:
                             break;
                     }
                     break;
+                default:
+                    break;
             }
         }
+        cout << "you left the loop" << endl;
     }
 
 

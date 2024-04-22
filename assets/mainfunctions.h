@@ -30,7 +30,7 @@ void PrintUserStats(User user);
 // starts the game
 int StartGame(Store *store);
 
-// returns either 0, 1, or 2, based on whether or not the user's shopping list has been completed
+// returns either 0, 1, or 2, based on whether the user's shopping list has been completed
 // 0 represents the user selecting to not checkout
 // 1 represents the user checking out without having completed their shopping list
 // 2 represents the user checking out with a completed shopping list

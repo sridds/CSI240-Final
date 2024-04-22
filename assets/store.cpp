@@ -70,7 +70,7 @@ bool Store::tryCollectGroceryItem(Food* item) {
             return true;
         }
     }
-    return true;
+    return false;
 }
 
 // This constructor is responsible for initalizing the aisle pointer arrays
@@ -291,7 +291,7 @@ Frozen* Store::getFrozenAisle() const { return frozenAisle; }
 string Store::printProduceAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
-        stream << produceAisle[i].print() << endl;
+        stream << to_string((i+1)) << ". " << produceAisle[i].print() << endl;
     }
     return stream.str();
 }
@@ -300,7 +300,7 @@ string Store::printProduceAisle(){
 string Store::printDairyAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
-        stream << dairyAisle[i].print() << endl;
+        stream << to_string((i+1)) << ". " << dairyAisle[i].print() << endl;
     }
     return stream.str();
 }
@@ -309,7 +309,7 @@ string Store::printDairyAisle(){
 string Store::printDeliAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
-        stream << deliAisle[i].print() << endl;
+        stream << to_string((i+1)) << ". " << deliAisle[i].print() << endl;
     }
     return stream.str();
 }
@@ -318,7 +318,7 @@ string Store::printDeliAisle(){
 string Store::printFrozenAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
-        stream << frozenAisle[i].print() << endl;
+        stream << to_string((i+1)) << ". " << frozenAisle[i].print() << endl;
     }
     return stream.str();
 }

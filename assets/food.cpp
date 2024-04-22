@@ -78,7 +78,11 @@ string Deli::print() {
     stream.setf(ios::fixed, ios::floatfield);
     stream.setf(ios::showpoint);
     stream.precision(2);
-    stream << name + " $" << price << " (Pounds: " << pounds << ")";
+
+    if (isCollected) stream << "(COLLECTED)";
+    else{
+        stream << name + " $" << price << " (Pounds: " << pounds << ")";
+    }
 
     return stream.str();
 }
