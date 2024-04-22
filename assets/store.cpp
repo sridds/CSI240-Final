@@ -80,11 +80,6 @@ Store::Store() {
     deliAisle = populateDeli();
     frozenAisle = populateFrozen();
     groceryList = setupGroceryList(STORE_LENGTH);
-
-    cout << *this;
-    /*for(int i = 0; i < STORE_LENGTH; i++){
-        cout << groceryList[i]->print() << endl;
-    }*/
 }
 
 /* This is a very specific function. In summary, the function does the following:
@@ -195,6 +190,7 @@ Deli* Store::populateDeli(){
         deliIndex++;
     }
 
+    // Ensure data is deallocated
     delete[] data;
     return pDeli;
 }
@@ -284,12 +280,14 @@ int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
     return keys;
 }
 
+// Getters
 Food** Store::getGroceryList() const { return groceryList; }
 Produce* Store::getProduceAisle() const { return produceAisle; }
 Dairy* Store::getDairyAisle() const { return dairyAisle; }
 Deli* Store::getDeliAisle() const { return deliAisle; }
 Frozen* Store::getFrozenAisle() const { return frozenAisle; }
 
+// The following function feeds the entire Produce aisle into a string stream and returns a string
 string Store::printProduceAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
@@ -297,6 +295,8 @@ string Store::printProduceAisle(){
     }
     return stream.str();
 }
+
+// The following function feeds the entire Dairy aisle into a string stream and returns a string
 string Store::printDairyAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
@@ -304,6 +304,8 @@ string Store::printDairyAisle(){
     }
     return stream.str();
 }
+
+// The following function feeds the entire Deli aisle into a string stream and returns a string
 string Store::printDeliAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
@@ -311,6 +313,8 @@ string Store::printDeliAisle(){
     }
     return stream.str();
 }
+
+// The following function feeds the entire Frozen aisle into a string stream and returns a string
 string Store::printFrozenAisle(){
     stringstream stream;
     for(int i = 0; i < STORE_LENGTH; i++){
