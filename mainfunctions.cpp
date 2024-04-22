@@ -521,7 +521,7 @@ void StartGame(Store *store, User user)
         auto stop = std::chrono::steady_clock::now();
 
         // the time from the start - the time from the stop gives us the total time in seconds
-        int time = (int) duration_cast<std::chrono::seconds>(stop - start).count();
+        int time = (int) std::chrono::duration_cast<std::chrono::seconds>(stop - start).count();
 
         time += (penalties * PENALTY_MULTIPLIER);
 
