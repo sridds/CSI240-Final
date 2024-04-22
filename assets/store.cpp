@@ -60,6 +60,19 @@ bool Store::isGroceryListComplete() const {
     return true;
 }
 
+/* This function is responsible for getting all items collected on the list and returning the total price of all items */
+double Store::getPriceOfCollected() const{
+    double price = 0.0;
+
+    for(int i = 0; i < STORE_LENGTH; i++){
+        if(groceryList[i]->getIsCollected()){
+            price += groceryList[i]->getPrice();
+        }
+    }
+
+    return price;
+}
+
 /* This function attempts to collect a grocery item and mark it as collected */
 bool Store::tryCollectGroceryItem(Food* item) {
     // loop through array and compare if the items match

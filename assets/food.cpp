@@ -69,7 +69,7 @@ Deli::Deli(string name, double price, double pounds) : Food(name, price){
     this->pounds = pounds;
 }
 
-double Deli::getPounds(){
+double Deli::getPounds() const{
     return pounds;
 }
 
@@ -94,7 +94,7 @@ Dairy::Dairy(string name, double price, bool isSpoiled) : Food(name, price){
 }
 
 void Dairy::setIsSpoiled(bool spoiled) { isSpoiled = spoiled; }
-bool Dairy::getIsSpoiled() { return isSpoiled; }
+bool Dairy::getIsSpoiled() const { return isSpoiled; }
 
 string Dairy::print() {
     stringstream stream;

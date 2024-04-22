@@ -57,6 +57,7 @@ public:
     // methods
     bool isGroceryListComplete() const;
     bool tryCollectGroceryItem(Food* item);
+    double getPriceOfCollected() const;
 
     string printProduceAisle();
     string printDairyAisle();

@@ -33,7 +33,6 @@ public:
     // methods
     virtual string print() = 0;
 
-    // checks equality based on name
     bool operator==(const Food& other) const;
 };
 
@@ -64,7 +63,7 @@ public:
 
     // getters / setters
     void setIsSpoiled(bool spoiled);
-    bool getIsSpoiled();
+    bool getIsSpoiled() const;
 
     // methods
     string print() override;
@@ -78,7 +77,7 @@ public:
     Deli();
     Deli(string name, double price, double pounds);
 
-    double getPounds();
+    double getPounds() const;
     string print() override;
 };
 
