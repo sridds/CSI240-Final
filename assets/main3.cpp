@@ -13,9 +13,6 @@ using namespace std;
 
 int main()
 {
-    // deallocate!!!!!!!!!!!!!!!!!!!!
-    Store *store = new Store();
-
     vector<User> userList = readUsersToVector();
     int choice, time;
     string loggedInUsername;
@@ -51,6 +48,7 @@ int main()
         while (loggedIn)
         {
             choice = PromptLoggedInChoice();
+            Store *store = new Store();;
 
             switch (choice)
             {
@@ -64,6 +62,7 @@ int main()
                     break;
                 case 3:
                     // 3. Log Out
+                    delete store;
                     loggedIn = false;
                     break;
                 case 4:

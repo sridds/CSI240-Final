@@ -498,6 +498,7 @@ void StartGame(Store *store, User user)
                         case 1:
                             // checking out without completing the list
                             cout << "You are now exiting the game.\n" << endl;
+
                             game = false;
                             break;
                         case 2:
@@ -515,34 +516,40 @@ void StartGame(Store *store, User user)
         }
     }
 
-    auto stop = std::chrono::steady_clock::now();
+    if (checkoutCase == 2)
+    {
+        auto stop = std::chrono::steady_clock::now();
 
-    // the time from the start - the time from the stop gives us the total time in seconds
-    int time = (int)duration_cast<std::chrono::seconds>(stop - start).count();
+        // the time from the start - the time from the stop gives us the total time in seconds
+        int time = (int) duration_cast<std::chrono::seconds>(stop - start).count();
 
-    time += (penalties * PENALTY_MULTIPLIER);
+        time += (penalties * PENALTY_MULTIPLIER);
 
-    // switch totalMoney parameter to getMoneyOfList function that has not yet been made
-    bool newBestTime = user.updateStats(1, ITEMS_IN_LIST, 100.00, time);
+        // switch totalMoney parameter to getMoneyOfList function that has not yet been made
+        bool newBestTime = user.updateStats(1, ITEMS_IN_LIST, 100.00, time);
 
-    if (time % 60 >= 10)
-        cout << "You completed the game with a time of " << time / 60 << ":" << time % 60 << "!" << endl;
-    else
-        cout << "You completed the game with a time of " << time / 60 << ":0" << time % 60 << "!" << endl;
+        if (time % 60 >= 10)
+            cout << "You completed the game with a time of " << time / 60 << ":" << time % 60 << "!" << endl;
+        else
+            cout << "You completed the game with a time of " << time / 60 << ":0" << time % 60 << "!" << endl;
 
-    moneySpent = store->getPriceOfCollected();
-    cout << "That shopping trip costed you $" << moneySpent << ".\n" << endl;
+        moneySpent = store->getPriceOfCollected();
 
-    if (newBestTime)
-        cout << "That's a new best time, congratulations!\n" << endl;
-    else
-        cout << "That did not beat your best time of " << user.getBestTime() << ".\n" << endl;
+        cout << "That shopping trip costed you $" << moneySpent << ".\n" << endl;
 
-    cout << "Press Enter to return to the main menu.\n" << endl;
-    cin.ignore();
+        if (newBestTime)
+            cout << "That's a new best time, congratulations!\n" << endl;
+        else
+            cout << "That did not beat your best time of " << user.getBestTime() << ".\n" << endl;
+
+        cout << "Press Enter to return to the main menu.\n" << endl;
+        cin.ignore();
+        cin.ignore();
+    }
 }
 
 int Checkout(Store *store)
+
 {
     int checkoutCase = 0;
     char yOrN;
