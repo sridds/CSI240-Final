@@ -44,6 +44,8 @@ add_executable(testing assets/main3.cpp
         cmake-build-debug/bin/userinfo.txt
         assets/mainfunctions.cpp
         assets/mainfunctions.h
+        assets/exceptions.cpp
+        assets/exceptions.h
 )
 add_executable(demo main.cpp)
 add_executable(demo2 main2.cpp)
