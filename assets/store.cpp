@@ -6,6 +6,7 @@
 #include "food.h"
 #include <fstream>
 #include <sstream>
+#include "exceptions.h"
 
 template<typename T>
 bool containsValue(T* arr, T value, int size);
@@ -104,7 +105,7 @@ string* Store::getRandomLinesFromFile(string path, int linesToRead, int lineCap)
     ifstream fileIn(path, ios::in);
     if(fileIn.fail()) {
         fileIn.close();
-        return nullptr;
+        throw FileNotFound(path);
     }
 
     string* data = new string[lineCap * linesToRead];
@@ -142,89 +143,118 @@ string* Store::getRandomLinesFromFile(string path, int linesToRead, int lineCap)
  * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Produce* Store::populateProduce(){
     // Get random lines using the helper function
-    string* data = getRandomLinesFromFile(PRODUCE_FILE_PATH, PRODUCE_READ_LINES - 1, STORE_LENGTH);
-    Produce* pProduce = new Produce[STORE_LENGTH];
+    try{
+        string* data = getRandomLinesFromFile(PRODUCE_FILE_PATH, PRODUCE_READ_LINES - 1, STORE_LENGTH);
 
-    int produceIndex = 0;
+        Produce* pProduce = new Produce[STORE_LENGTH];
 
-    // Store the data in the pProduce array
-    for(int i = 0; i < STORE_LENGTH * (PRODUCE_READ_LINES - 1); i += (PRODUCE_READ_LINES - 1)){
+        int produceIndex = 0;
 
-        // Converts the line to a produce type by comparing the line to every entry in PRODUCE_STRINGS
-        ProduceType typeKey;
-        for(int j = 0; j < sizeof(PRODUCE_STRINGS); j++){
-            if(PRODUCE_STRINGS[j] == data[i + 2]){
-                typeKey = (ProduceType)j;
+        // Store the data in the pProduce array
+        for(int i = 0; i < STORE_LENGTH * (PRODUCE_READ_LINES - 1); i += (PRODUCE_READ_LINES - 1)){
+
+            // Converts the line to a produce type by comparing the line to every entry in PRODUCE_STRINGS
+            ProduceType typeKey;
+            for(int j = 0; j < sizeof(PRODUCE_STRINGS); j++){
+                if(PRODUCE_STRINGS[j] == data[i + 2]){
+                    typeKey = (ProduceType)j;
+                }
             }
+
+            // Store data. Because of how the loop functions this will not break
+            pProduce[produceIndex] = *new Produce(data[i], stod(data[i + 1]), typeKey);
+            produceIndex++;
         }
 
-        // Store data. Because of how the loop functions this will not break
-        pProduce[produceIndex] = *new Produce(data[i], stod(data[i + 1]), typeKey);
-        produceIndex++;
+        // Deallocate data before leaving function scope
+        delete[] data;
+        return pProduce;
     }
-
-    // Deallocate data before leaving function scope
-    delete[] data;
-    return pProduce;
+    // Catch file exception
+    catch(FileNotFound fileNotFound){
+        cout << "Failed to open file: \"" << fileNotFound.getFilePath() << "\"!" << endl;
+        exit(0);
+    }
 }
 
 /* The following function is responsible for populating the Dairy aisle with a bunch of random data from the file.
  * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Dairy* Store::populateDairy(){
     // get random lines
-    string* data = getRandomLinesFromFile(DAIRY_FILE_PATH, DAIRY_READ_LINES - 1, STORE_LENGTH);
-    Dairy* pDairy = new Dairy[STORE_LENGTH];
+    try{
+        string* data = getRandomLinesFromFile(DAIRY_FILE_PATH, DAIRY_READ_LINES - 1, STORE_LENGTH);
+        Dairy* pDairy = new Dairy[STORE_LENGTH];
 
-    int dairyIndex = 0;
-    // Store the data in the pDairy array
-    for(int i = 0; i < STORE_LENGTH * (DAIRY_READ_LINES - 1); i += (DAIRY_READ_LINES - 1)){
-        // store data. because of how the loop functions this will not break
-        pDairy[dairyIndex] = *new Dairy(data[i], stod(data[i + 1]), stoi(data[i + 2]));
-        dairyIndex++;
+        int dairyIndex = 0;
+        // Store the data in the pDairy array
+        for(int i = 0; i < STORE_LENGTH * (DAIRY_READ_LINES - 1); i += (DAIRY_READ_LINES - 1)){
+            // store data. because of how the loop functions this will not break
+            pDairy[dairyIndex] = *new Dairy(data[i], stod(data[i + 1]), stoi(data[i + 2]));
+            dairyIndex++;
+        }
+
+        // Deallocate data
+        delete[] data;
+        return pDairy;
     }
-
-    // Deallocate data
-    delete[] data;
-    return pDairy;
+    // Catch file exception
+    catch(FileNotFound fileNotFound){
+        cout << "Failed to open file: \"" << fileNotFound.getFilePath() << "\"!" << endl;
+        exit(0);
+    }
 }
 
 /* The following function is responsible for populating the Deli aisle with a bunch of random data from the file.
  * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Deli* Store::populateDeli(){
     // get random lines
-    string* data = getRandomLinesFromFile(DELI_FILE_PATH, DELI_READ_LINES - 1, STORE_LENGTH);
-    Deli* pDeli = new Deli[STORE_LENGTH];
+    try{
+        string* data = getRandomLinesFromFile(DELI_FILE_PATH, DELI_READ_LINES - 1, STORE_LENGTH);
+        Deli* pDeli = new Deli[STORE_LENGTH];
 
-    int deliIndex = 0;
-    // Store the data in the pDeli array
-    for(int i = 0; i < STORE_LENGTH * (DELI_READ_LINES - 1); i += (DELI_READ_LINES - 1)){
-        // store data. because of how the loop functions this will not break
-        pDeli[deliIndex] = *new Deli(data[i], stod(data[i + 1]), stod(data[i + 2]));
-        deliIndex++;
+        int deliIndex = 0;
+        // Store the data in the pDeli array
+        for(int i = 0; i < STORE_LENGTH * (DELI_READ_LINES - 1); i += (DELI_READ_LINES - 1)){
+            // store data. because of how the loop functions this will not break
+            pDeli[deliIndex] = *new Deli(data[i], stod(data[i + 1]), stod(data[i + 2]));
+            deliIndex++;
+        }
+
+        // Ensure data is deallocated
+        delete[] data;
+        return pDeli;
     }
-
-    // Ensure data is deallocated
-    delete[] data;
-    return pDeli;
+    // Catch file exception
+    catch(FileNotFound fileNotFound){
+        cout << "Failed to open file: \"" << fileNotFound.getFilePath() << "\"!" << endl;
+        exit(0);
+    }
 }
 
 /* The following function is responsible for populating the Frozen aisle with a bunch of random data from the file.
  * Getting random data entries is already handled by getRandomLinesFromFile(), so this function merely determines how to interpret the data. */
 Frozen* Store::populateFrozen(){
     // get random lines
-    string* data = getRandomLinesFromFile(FROZEN_FILE_PATH, FROZEN_READ_LINES - 1, STORE_LENGTH);
-    Frozen* pFrozen = new Frozen[STORE_LENGTH];
+    try{
+        string* data = getRandomLinesFromFile(FROZEN_FILE_PATH, FROZEN_READ_LINES - 1, STORE_LENGTH);
+        Frozen* pFrozen = new Frozen[STORE_LENGTH];
 
-    int frozenIndex = 0;
-    // Store the data in the pFrozen array
-    for(int i = 0; i < STORE_LENGTH * (FROZEN_READ_LINES - 1); i += (FROZEN_READ_LINES - 1)){
-        // store data. because of how the loop functions this will not break
-        pFrozen[frozenIndex] = *new Frozen(data[i], stod(data[i + 1]), stoi(data[i + 2]), stoi(data[i + 3]));
-        frozenIndex++;
+        int frozenIndex = 0;
+        // Store the data in the pFrozen array
+        for(int i = 0; i < STORE_LENGTH * (FROZEN_READ_LINES - 1); i += (FROZEN_READ_LINES - 1)){
+            // store data. because of how the loop functions this will not break
+            pFrozen[frozenIndex] = *new Frozen(data[i], stod(data[i + 1]), stoi(data[i + 2]), stoi(data[i + 3]));
+            frozenIndex++;
+        }
+
+        delete[] data;
+        return pFrozen;
     }
-
-    delete[] data;
-    return pFrozen;
+    // Catch file exception
+    catch(FileNotFound fileNotFound){
+        cout << "Failed to open file: \"" << fileNotFound.getFilePath() << "\"!" << endl;
+        exit(0);
+    }
 }
 
 // This destructor primarily handles the deallocation of aisles to ensure proper cleanup.
