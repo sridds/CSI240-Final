@@ -255,7 +255,7 @@ void StartGame(Store *store, User user)
     int choice = 0, checkoutCase, penalties = 0;
     bool game = true, loop = true, inAisle = true;
     // statistics variables
-    int itemsCollected = 0, moneySpent = 0;
+    double moneySpent = 0;
 
     cout << "You are now inside of a grocery store with 4 aisles of items!" << endl
     << "If you view your list, you will see that you need to find 10 items as fast as you can!"
@@ -385,6 +385,7 @@ void StartGame(Store *store, User user)
                             else
                             {
                                 cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                penalties++;
                                 cin.ignore();
                                 choice = 0;
                             }
@@ -429,6 +430,7 @@ void StartGame(Store *store, User user)
                             else
                             {
                                 cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                penalties++;
                                 cin.ignore();
                                 choice = 0;
                             }
@@ -473,6 +475,7 @@ void StartGame(Store *store, User user)
                             else
                             {
                                 cout << "That was not on your list :( +5 seconds." << endl<< "Press Enter to continue.\n" << endl;
+                                penalties++;
                                 cin.ignore();
                                 choice = 0;
                             }
@@ -526,6 +529,9 @@ void StartGame(Store *store, User user)
         cout << "You completed the game with a time of " << time / 60 << ":" << time % 60 << "!" << endl;
     else
         cout << "You completed the game with a time of " << time / 60 << ":0" << time % 60 << "!" << endl;
+
+    moneySpent = store->getPriceOfCollected();
+    cout << "That shopping trip costed you $" << moneySpent << ".\n" << endl;
 
     if (newBestTime)
         cout << "That's a new best time, congratulations!\n" << endl;
