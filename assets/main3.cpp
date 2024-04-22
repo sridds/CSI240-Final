@@ -56,7 +56,7 @@ int main()
             {
                 case 1:
                     // 1. Start Game
-                    time = StartGame(store);
+                    StartGame(store, loggedInUser);
                     break;
                 case 2:
                     // 2. View User Statistics
