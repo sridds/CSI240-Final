@@ -5,6 +5,8 @@
 #ifndef MYPROJECT_MAINFUNCTIONS_H
 #define MYPROJECT_MAINFUNCTIONS_H
 
+#include "store.h"
+
 using namespace std;
 
 // reads the userinfo.txt file into user instances, which are put into a vector
@@ -24,5 +26,14 @@ User CreateNewUser(vector<User> list);
 
 // prints the given username's overall statistics
 void PrintUserStats(User user);
+
+// starts the game
+int StartGame(Store *store);
+
+// returns either 0, 1, or 2, based on whether or not the user's shopping list has been completed
+// 0 represents the user selecting to not checkout
+// 1 represents the user checking out without having completed their shopping list
+// 2 represents the user checking out with a completed shopping list
+int Checkout(Store *store);
 
 #endif //MYPROJECT_MAINFUNCTIONS_H

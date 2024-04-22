@@ -7,7 +7,9 @@
 #include <string>
 #include <vector>
 #include <limits>
+#include <chrono>
 #include "user.h"
+#include "store.h"
 #include "mainfunctions.h"
 
 // reads the user info text file, creating a user object for each user, and assigning the proper statistics
@@ -246,4 +248,134 @@ void PrintUserStats(User user) {
 
     cin.ignore();
     cin.ignore();
+}
+
+int StartGame(Store *store)
+{
+    int choice = 0, checkoutCase;
+    bool game = true;
+    // statistics variables
+    int itemsCollected = 0, moneySpent = 0;
+
+    cout << "You are now inside of a grocery store with 4 aisles of items!" << endl
+    << "If you view your list, you will see that you need to find 10 items as fast as you can!"
+    << endl << "Selecting an item that is not on your list will add 5 seconds to your time." << endl
+    << "Good luck!\n" << endl << "Press Enter to begin!" << endl;
+
+    cin.ignore();
+    cin.ignore();
+
+    auto start = std::chrono::steady_clock::now();
+
+    // game here
+    while (game)
+    {
+        while (choice == 0)
+        {
+            cout << "S&B Grocery Store :)\n" << endl << "1. View Shopping List" << endl
+                 << "2. Produce Aisle" << endl << "3. Dairy Aisle" << endl << "4. Deli Aisle"
+                 << endl << "5. Frozen Aisle" << endl << "6. Checkout Counter\n" << endl;
+
+            cin >> choice;
+
+            // if the input isnt good
+            if (cin.fail())
+            {
+                choice = 0;
+                cout << "That was not a number, please pick a valid option between 1, 2, 3, 4, 5, and 6." << endl;
+                // reset input
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+            else if (!(choice > 0 && choice < 7))
+            {
+                choice = 0;
+                cout << "That was not a valid option, please pick a valid option between 1, 2, 3, 4, 5, and 6." << endl;
+                // reset input
+                cin.clear();
+                cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            }
+
+            switch (choice)
+            {
+                case 1:
+                    // 1. View Shopping List
+                    break;
+                case 2:
+                    // 2. Produce Aisle
+                    break;
+                case 3:
+                    // 3. Dairy Aisle
+                    break;
+                case 4:
+                    // 4. Deli Aisle
+                    break;
+                case 5:
+                    // 5. Frozen Aisle
+                    break;
+                case 6:
+                    // 6. Checkout Counter
+                    checkoutCase = Checkout(store);
+                    switch (checkoutCase)
+                    {
+                        case 0:
+                            // returning back to the game
+                            cout << "You will now be returned to the main aisle.\n" << endl;
+                            choice = 0;
+                            break;
+                        case 1:
+                            // checking out without completing the list
+                            cout << "You are now exiting the game.\n" << endl;
+                            game = false;
+                            break;
+                        case 2:
+                            // checking out with completing the list
+                            break;
+                        default:
+                            break;
+                    }
+                    break;
+            }
+        }
+    }
+
+
+    auto stop = std::chrono::steady_clock::now();
+
+    // getting time
+    int time = (int)duration_cast<std::chrono::seconds>(stop - start).count();
+
+    return time;
+}
+
+int Checkout(Store *store)
+{
+    int checkoutCase = 0;
+    char yOrN;
+
+    if (store->isGroceryListComplete())
+    {
+        cout << "You have successfully completed your shopping list! Great job!" << endl;
+        checkoutCase = 2;
+    }
+    else // if the list is not empty
+    {
+        cout << "Your grocery list is not yet empty." << endl
+        << "Checking out now will return you to the main menu without saving any game statistics." << endl;
+
+        cout << "Would you still like to checkout? (y/n)" << endl;
+        cin >> yOrN;
+
+        if (yOrN == 'y')
+        {
+            // checking out without having finished the shopping list
+            checkoutCase = 1;
+        }
+        else if (yOrN == 'n')
+        {
+            // returning back to the shopping.
+            checkoutCase = 0;
+        }
+    }
+    return checkoutCase;
 }

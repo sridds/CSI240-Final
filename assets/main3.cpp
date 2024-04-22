@@ -13,13 +13,12 @@ using namespace std;
 
 int main()
 {
-    /*
-    Store* store = new Store();
-    delete store;
-     */
+    // deallocate!!!!!!!!!!!!!!!!!!!!
+    Store *store = new Store();
+    store->printProduceAisle();
 
     vector<User> userList = readUsersToVector();
-    int choice;
+    int choice, time;
     string loggedInUsername;
     User loggedInUser;
     bool loggedIn = false;
@@ -58,7 +57,7 @@ int main()
             {
                 case 1:
                     // 1. Start Game
-                    // not yet implemented
+                    time = StartGame(store);
                     break;
                 case 2:
                     // 2. View User Statistics
