@@ -259,7 +259,13 @@ Frozen* Store::populateFrozen(){
 
 // This destructor primarily handles the deallocation of aisles to ensure proper cleanup.
 Store::~Store() {
-    // deallocate arrays
+    // deallocate grocery list
+    for (int i = 0; i < STORE_LENGTH; i++)
+        delete[] groceryList[i];
+
+    delete[] groceryList;
+
+    // deallocate aisles
     delete[] produceAisle;
     delete[] dairyAisle;
     delete[] deliAisle;
