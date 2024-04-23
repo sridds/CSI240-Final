@@ -3,6 +3,9 @@ project(final)
 
 set(CMAKE_CXX_STANDARD 17)
 
+file(GLOB FILES "*.txt")
+file(COPY ${FILES} DESTINATION ${CMAKE_CURRENT_BINARY_DIR})
+
 add_executable(final main.cpp
         exceptions.h
         exceptions.cpp
@@ -14,9 +17,4 @@ add_executable(final main.cpp
         store.h
         user.cpp
         user.h
-        userinfo.txt
-        deli.txt
-        dairy.txt
-        produce.txt
-        frozen.txt
 )

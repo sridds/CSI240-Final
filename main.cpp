@@ -37,7 +37,7 @@ int main()
 {
     vector<User> userList = readUsersToVector();
     int choice, time;
-    string loggedInUsername;
+    string loggedInUsername, loggedInPass;
     User loggedInUser;
     bool loggedIn = false;
 
@@ -51,19 +51,28 @@ int main()
         if (choice == 1)
         {
             loggedInUsername = PromptLogin(userList);
-            loggedIn = true;
+            loggedInPass = loggedInUsername;
+            loggedInUsername.erase(loggedInUsername.find(' '));
+            loggedInPass = loggedInPass.substr((int)loggedInUsername.length() + 1, (int)loggedInPass.length());
+
             for (User &p : userList)
             {
                 if (p.getUsername() == loggedInUsername)
                 {
-                    loggedInUser = p;
+                    if (p.getPassword() == loggedInPass)
+                    {
+                        loggedIn = true;
+                        loggedInUser = p;
+                    }
                 }
             }
         }
         else if (choice == 2)
         {
+            cin.ignore(numeric_limits<streamsize>::max(), '\n');
             User newUser = CreateNewUser(userList);
             userList.push_back(newUser);
+            loggedInUser = newUser;
             loggedIn = true;
         }
 

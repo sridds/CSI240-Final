@@ -1,0 +1,119 @@
+1% Fat Milk
+4.99
+0
+
+2% Fat Milk
+4.99
+1
+
+Whole Milk
+4.99
+0
+
+Skim Milk
+5.99
+1
+
+Almond Milk
+5.99
+0
+
+Oat Milk
+5.99
+1
+
+Plain Cream Cheese
+2.99
+0
+
+Unsalted Butter
+1.50
+1
+
+Salted Butter
+1.50
+0
+
+Strawberry Yogurt
+1.99
+1
+
+Blueberry Yogurt
+1.99
+0
+
+Greek Yogurt
+1.99
+1
+
+Plain Yogurt
+1.99
+0
+
+Vanilla Yogurt
+1.99
+1
+
+Chocolate Milk
+2.99
+0
+
+Strawberry Milk
+5.99
+1
+
+"I Can't Believe It's Not Butter"
+4.50
+1
+
+Strawberry Cream Cheese
+3.50
+0
+
+Garlic and Chive Cream Cheese
+3.50
+0
+
+Blueberry Cream Cheese
+3.50
+1
+
+Low Fat Butter
+2.99
+0
+
+Protein+ Chocolate Milk
+6.99
+0
+
+Mixed Berry Yogurt
+1.99
+1
+
+Banana Yogurt
+1.99
+0
+
+Raspberry Yogurt
+1.99
+1
+
+Blackberry Yogurt
+1.99
+0
+
+Low Fat Cream Cheese
+3.99
+0
+
+Scallion Cream Cheese
+3.50
+1
+
+Apple Pie Yogurt
+1.99
+1
+
+Chocolate Yogurt
+1.99
+0

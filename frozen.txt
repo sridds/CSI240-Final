@@ -1,0 +1,149 @@
+Vanilla Ice Cream
+3.49
+0
+1
+
+Chocolate Ice Cream
+3.49
+1
+0
+
+Sherbet Ice Cream
+4.09
+0
+1
+
+Neapolitan Ice Cream
+3.49
+1
+0
+
+Cookie Dough Ice Cream
+4.09
+0
+1
+
+Mocha Swirl Ice Cream
+5.19
+1
+0
+
+Strawberry Ice Cream
+4.29
+0
+1
+
+Black Raspberry Ice Cream
+4.29
+1
+0
+
+Cotton Candy Ice Cream
+4.79
+0
+1
+
+Coffee Ice Cream
+4.79
+1
+0
+
+Lemon Italian Ice
+0.99
+0
+1
+
+Strawberry Italian Ice
+0.99
+1
+0
+
+Watermelon Italian Ice
+0.99
+0
+1
+
+Cherry Italian Ice
+0.99
+1
+0
+
+Frozen Assorted Vegetables
+4.50
+0
+1
+
+Frozen Broccoli
+3.99
+1
+0
+
+Frozen Peas
+3.99
+0
+1
+
+Frozen Carrots
+3.99
+0
+1
+
+Bag of Ice
+1.99
+0
+1
+
+Syntax Sugar Ice Cream
+4.99
+0
+1
+
+Assorted Fruit Popsicles
+3.99
+0
+1
+
+Chocolate Covered Vanilla Popsicles
+4.99
+0
+1
+
+Vanilla Popsicles
+3.99
+1
+0
+
+Orange Cream Popsicles
+4.99
+0
+1
+
+Frozen Bean Burrito
+0.99
+1
+0
+
+Frozen Cheese Burrito
+0.99
+0
+1
+
+Frozen Bean and Cheese Burrito
+1.25
+0
+1
+
+Frozen Beef Burrito
+1.25
+0
+1
+
+Frozen Beef and Cheese Burrito
+1.50
+0
+1
+
+Frozen Beef and Bean and Cheese Burrito
+1.50
+0
+1

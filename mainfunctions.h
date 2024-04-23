@@ -53,7 +53,7 @@ User CreateNewUser(vector<User> list);
 void PrintUserStats(User user);
 
 // starts the game
-void StartGame(Store *store, User user);
+void StartGame(Store *store, User &user);
 
 // returns either 0, 1, or 2, based on whether the user's shopping list has been completed
 // 0 represents the user selecting to not checkout

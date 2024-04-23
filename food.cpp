@@ -159,6 +159,18 @@ string Frozen::print() {
     return stream.str();
 }
 
-//ImGui::Begin("Window");
-// write in a while loop inside newFrame() before cleanup / end of loop ADTER ImGui::NewFrame
-//ImGui::End();
+Frozen::~Frozen() {
+    cout << "Deconstructed Frozen" << endl;
+}
+
+Deli::~Deli() {
+    cout << "Deconstructed Deli" << endl;
+}
+
+Produce::~Produce() {
+    cout << "Deconstructed Produce" << endl;
+}
+
+Dairy::~Dairy() {
+    cout << "Deconstructed Dairy" << endl;
+}

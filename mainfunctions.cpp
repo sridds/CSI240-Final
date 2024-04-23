@@ -108,13 +108,14 @@ string PromptLogin(vector<User> list)
         // retry login if failed
         if (!loggedIn)
         {
-            cout << "You have entered an incorrect username and/or password. Please try again." << endl;
+            cout << "You have entered an incorrect username and/or password. Press Enter to Continue." << endl;
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
+            break;
         }
     }
 
-    return user;
+    return user + " " + pass;
 }
 
 // prompt the user with the main menu choices, and return which they chose
@@ -207,14 +208,12 @@ User CreateNewUser(vector<User> list)
     {
         cout << "\nPlease enter the username you wish to use: " << endl;
         getline(cin, username);
-        cout << username << endl;
 
         // testing if the username is already taken or not
         for (User &p : list)
         {
             if (p.getUsername() == username)
             {
-                cout << username << " " << p.getUsername() << endl;
                 userTaken = true;
             }
         }
@@ -272,7 +271,7 @@ void PrintUserStats(User user) {
     cin.ignore();
 }
 
-void StartGame(Store *store, User user)
+void StartGame(Store *store, User &user)
 {
     int choice = 0, checkoutCase, penalties = 0;
     bool game = true, loop = true, inAisle = true;
@@ -547,15 +546,14 @@ void StartGame(Store *store, User user)
 
         time += (penalties * PENALTY_MULTIPLIER);
 
-        // switch totalMoney parameter to getMoneyOfList function that has not yet been made
-        bool newBestTime = user.updateStats(1, ITEMS_IN_LIST, 100.00, time);
+        moneySpent = store->getPriceOfCollected();
+
+        bool newBestTime = user.updateStats(1, ITEMS_IN_LIST, moneySpent, time);
 
         if (time % 60 >= 10)
             cout << "You completed the game with a time of " << time / 60 << ":" << time % 60 << "!" << endl;
         else
             cout << "You completed the game with a time of " << time / 60 << ":0" << time % 60 << "!" << endl;
-
-        moneySpent = store->getPriceOfCollected();
 
         cout << "That shopping trip costed you $" << moneySpent << ".\n" << endl;
 

@@ -1,0 +1,119 @@
+Buffalo Chicken
+1.78
+0.25
+
+Barbecue Chicken
+3.99
+0.5
+
+Chicken
+5.99
+1.0
+
+Thin-Sliced Turkey
+2.00
+0.25
+
+Oven-Roasted Turkey
+4.15
+0.5
+
+Turkey
+7.99
+1.0
+
+Krakus Smoked Ham
+1.65
+0.25
+
+Honey Smoked Ham
+3.99
+0.5
+
+Smoked Ham
+7.49
+1.0
+
+Premium Roast Beef
+12.99
+1.0
+
+Lean Roast Beef
+6.79
+0.5
+
+Roast Beef
+2.15
+0.25
+
+Corned Beef
+5.69
+0.5
+
+Bologna
+3.99
+0.5
+
+Salami
+3.79
+0.5
+
+Pastrami
+3.50
+0.5
+
+Thick Pepperoni
+4.89
+1.00
+
+Thin Pepperoni
+3.99
+0.5
+
+Pepperoni
+1.65
+0.25
+
+German Sausage
+1.80
+0.25
+
+Polish Sausage
+3.59
+0.50
+
+Sausage
+8.19
+1.00
+
+Japanese Pork Belly
+15.69
+1.00
+
+Korean Pork Belly
+4.19
+0.25
+
+Pork Belly
+6.20
+0.5
+
+Sirloin
+16.19
+1.00
+
+Lamb Chop
+11.39
+1.00
+
+Prime Rib
+15.99
+1.00
+
+Prosciutto
+14.55
+1.00
+
+Salmon
+10.99
+1.00
