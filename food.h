@@ -31,6 +31,7 @@ database for the purpose of future plagiarism checking)
 
 using namespace std;
 
+// An enum for the produce type and the corresponding strings for each value
 enum ProduceType{ FRUIT, EXOTIC, MELON, BERRY, PEPPER, CITRUS, ROOT, GREEN, CRUCIFEROUS, FUNGUS, UNDEFINED = -1 };
 const string PRODUCE_STRINGS[] = { "Fruit", "Exotic", "Melon", "Berry", "Pepper", "Citrus", "Root", "Leafy Green", "Cruciferous", "Fungus" };
 

@@ -31,9 +31,6 @@ database for the purpose of future plagiarism checking)
 #include <sstream>
 #include "exceptions.h"
 
-template<typename T>
-bool containsValue(T* arr, T value, int size);
-
 /* The following code is responsible for generating a shopping list from a provided store reference
  * ~ store: A constant reference that will be used to select items from
  * ~ listLength: A variable that will determine how long the shopping list will be
@@ -112,6 +109,7 @@ bool Store::tryCollectGroceryItem(Food* item) {
 
 // This constructor is responsible for initalizing the aisle pointer arrays
 Store::Store() {
+    // Populate all aisles with data and setup the list
     produceAisle = populateProduce();
     dairyAisle = populateDairy();
     deliAisle = populateDeli();
@@ -270,6 +268,7 @@ Frozen* Store::populateFrozen(){
             frozenIndex++;
         }
 
+        // Ensure deallocation
         delete[] data;
         return pFrozen;
     }
@@ -333,6 +332,7 @@ int* Store::shuffleKeysFromFile(int size, int linesToSkip, string filePath){
         count++;
     }
 
+    // Randomize
     srand(time(NULL));
     int* keys = new int[size];
 

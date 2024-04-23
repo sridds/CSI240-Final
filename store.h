@@ -38,6 +38,7 @@ const int FILES_TO_READ = 4;
 
 class Store {
 private:
+    // This is a double pointer to accomodate for the fact that Food is an abstract class. Must be a double pointer
     Food** groceryList;
 
     // aisle references
@@ -46,6 +47,7 @@ private:
     Deli* deliAisle;
     Frozen* frozenAisle;
 
+    // helper methods
     int* shuffleKeysFromFile(int size, int linesToSkip, string filePath);
     string* getRandomLinesFromFile(string path, int linesToRead, int lineCap);
     Food** setupGroceryList(int listLength);
@@ -55,11 +57,13 @@ private:
     Deli* populateDeli();
     Frozen* populateFrozen();
 
+    // constants
     const int PRODUCE_READ_LINES = 4;
     const int DAIRY_READ_LINES = 4;
     const int DELI_READ_LINES = 4;
     const int FROZEN_READ_LINES = 5;
 
+    // paths
     const string PRODUCE_FILE_PATH = "produce.txt";
     const string DAIRY_FILE_PATH = "dairy.txt";
     const string DELI_FILE_PATH = "deli.txt";
@@ -90,11 +94,17 @@ public:
     /* Using a friend operator, attempting to print the store in a stream will output the full shopping list */
     friend std::ostream& operator<<(std::ostream& stream, const Store& store){
         for(int i = 0; i < STORE_LENGTH; i++){
+            // Print out each item on the grocery list
             stream << store.getGroceryList()[i]->print() << endl;
         }
 
         return stream;
     }
 };
+
+
+// Prototype for helper function
+template<typename T>
+bool containsValue(T* arr, T value, int size);
 
 #endif //MYPROJECT_STORE_H

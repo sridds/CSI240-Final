@@ -31,6 +31,7 @@ database for the purpose of future plagiarism checking)
 
 using namespace std;
 
+// This exception is thrown when the file is not located
 class FileNotFound {
 private:
     string filePath;
