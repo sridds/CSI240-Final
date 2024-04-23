@@ -30,6 +30,7 @@ database for the purpose of future plagiarism checking)
 
 using namespace std;
 
+// Constructors
 User::User()
 {
     username = "";
@@ -55,6 +56,7 @@ string User::getUsername() { return username; }
 
 string User::getPassword() { return password; }
 
+// returning the best time as a string formatted in minutes:seconds
 string User::getBestTime()
 {
     string bestTimeString;
@@ -89,6 +91,7 @@ void User::setItemsCollected(int totalItems) { itemsCollected = totalItems; }
 
 void User::setMoneySpent(double totalMoney) { moneySpent = totalMoney; }
 
+// update stats will update both the user instance that is signed in and the text file, after completing a game
 bool User::updateStats(int totalGames, int totalItems, double totalMoney, int seconds)
 {
     bool newBest;
@@ -105,6 +108,7 @@ bool User::updateStats(int totalGames, int totalItems, double totalMoney, int se
     }
 
     ifstream stream(USER_INFO_FILE);
+    // temp file will be the new file to write over to
     ofstream temp("temp.txt");
 
     string replace;

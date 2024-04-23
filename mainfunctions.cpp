@@ -51,10 +51,12 @@ vector<User> readUsersToVector()
         stream.close();
     }
 
+    // statistics variables
     string uname, pword, temp;
     int totalGames, totalItems, seconds;
     double moneySpent;
 
+    // while not at the end of the file
     while(!stream.eof())
     {
         // grab and store all values of a user
@@ -86,6 +88,7 @@ string PromptLogin(vector<User> list)
 
     while (!loggedIn)
     {
+        // grabibng user info
         cout << "Enter your username: " << endl;
         cin >> user;
         cout << "Enter your password: " << endl;
@@ -95,6 +98,7 @@ string PromptLogin(vector<User> list)
         // check if both the username and the password are correct and correlating to a user in the vector
         for (int i = 0; i < list.size(); i++)
         {
+            // check both user and pass
             if (user == list[i].getUsername())
             {
                 if (pass == list[i].getPassword())
@@ -244,13 +248,14 @@ User CreateNewUser(vector<User> list)
 
     stream << username << endl << password << endl << DEFAULT_STATS;
 
+    // create the newUser object and return it
     User newUser = User(username, password, 0, 0, 0, 99999);
-
     return newUser;
 }
 
-// print out the logged in user's statistics
-void PrintUserStats(User user) {
+// print out the currenlty logged in user's statistics
+void PrintUserStats(User user)
+{
     cout << "Statistics for user " << user.getUsername() << ".\n" << endl;
     cout << "Total Games Played: " << user.getGamesPlayed() << endl;
     cout << "Total Items Grabbed: " << user.getItemsCollected() << endl;
@@ -266,11 +271,11 @@ void PrintUserStats(User user) {
     }
 
     cout << "Press Enter to continue." << endl;
-
     cin.ignore();
     cin.ignore();
 }
 
+// Start game puts the user into a loop where the actual game takes place.
 void StartGame(Store *store, User &user)
 {
     int choice = 0, checkoutCase, penalties = 0;
@@ -283,16 +288,17 @@ void StartGame(Store *store, User &user)
     << endl << "Selecting an item that is not on your list will add 5 seconds to your time." << endl
     << "Good luck!\n" << endl << "Press Enter to begin!" << endl;
 
+    // Game is started after pressing enter
     cin.ignore();
     cin.ignore();
 
     auto start = std::chrono::steady_clock::now();
 
-    // game here
     while (game)
     {
         while (choice == 0)
         {
+            // menuing
             cout << "S&B Grocery Store :)\n" << endl << "1. View Shopping List" << endl
                  << "2. Produce Aisle" << endl << "3. Dairy Aisle" << endl << "4. Deli Aisle"
                  << endl << "5. Frozen Aisle" << endl << "6. Checkout Counter\n" << endl;
@@ -330,10 +336,12 @@ void StartGame(Store *store, User &user)
                     // 2. Produce Aisle
                     while (inAisle)
                     {
+                        //printing entire aisle with options, then get the user's choice
                         cout << store->printProduceAisle() << endl << "11. Return\n" << endl;
                         cin >> choice;
                         cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
+                        // testing if the choice was valid
                         if (cin.fail() || !(choice > 0 && choice < 12))
                         {
                             cout << "That is not a valid choice. Please pick a number from the list.\n" << endl;
@@ -342,6 +350,7 @@ void StartGame(Store *store, User &user)
                             choice = 0;
                         }
 
+                        // special choice case
                         if (choice == 11)
                         {
                             choice = 0;
@@ -350,6 +359,7 @@ void StartGame(Store *store, User &user)
                         }
                         else
                         {
+                            // try to collect the item the user has chosen
                             bool itemOnList = store->tryCollectGroceryItem(&(store->getProduceAisle()[choice - 1]));
 
                             if (itemOnList)
@@ -548,6 +558,7 @@ void StartGame(Store *store, User &user)
 
         moneySpent = store->getPriceOfCollected();
 
+        // handle whether the user got a new best or not
         bool newBestTime = user.updateStats(1, ITEMS_IN_LIST, moneySpent, time);
 
         if (time % 60 >= 10)
@@ -568,6 +579,11 @@ void StartGame(Store *store, User &user)
     }
 }
 
+// checkout will process whether the user has finished their check list or not, and allow them to leave early
+// returns 0, 1, or 2, based on the case
+// 0 means the user has chosen to checkout, but then chooses not to leave
+// 1 means the user is leaving early without finishing
+// 2 means the user has finished the list
 int Checkout(Store *store)
 
 {
