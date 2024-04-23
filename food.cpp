@@ -35,6 +35,7 @@ Food::Food(){
     price = 0.0;
 }
 
+// This operator is helpful for comparing two foods and verifying whether or not they share the same name
 bool Food::operator==(const Food& other) const{
     return name == other.getName();
 }
@@ -60,6 +61,7 @@ Food::Food(string name, double price){
     this->isCollected = false;
 }
 
+// Getter / Setter implementation
 string Food::getName() const { return name; }
 double Food::getPrice() const { return price; }
 bool Food::getIsCollected() const { return isCollected; }
@@ -74,11 +76,13 @@ Produce::Produce(string name, double price, ProduceType type) : Food(name, price
 ProduceType Produce::getProduceType() { return type; }
 
 string Produce::print() {
+    // Setup string
     stringstream stream;
     stream.setf(ios::fixed, ios::floatfield);
     stream.setf(ios::showpoint);
     stream.precision(2);
 
+    // Output the collected string if already collected
     if(isCollected) stream << "(COLLECTED)";
     else stream << name << " $" << price << " (" << PRODUCE_STRINGS[type] << ")";
 
@@ -96,11 +100,13 @@ double Deli::getPounds() const{
 }
 
 string Deli::print() {
+    // Setup stream
     stringstream stream;
     stream.setf(ios::fixed, ios::floatfield);
     stream.setf(ios::showpoint);
     stream.precision(2);
 
+    // Output the collected string if already collected
     if (isCollected) stream << "(COLLECTED)";
     else{
         stream << name + " $" << price << " (Pounds: " << pounds << ")";
@@ -115,15 +121,18 @@ Dairy::Dairy(string name, double price, bool isSpoiled) : Food(name, price){
     this->isSpoiled = isSpoiled;
 }
 
+// Getters and setters
 void Dairy::setIsSpoiled(bool spoiled) { isSpoiled = spoiled; }
 bool Dairy::getIsSpoiled() const { return isSpoiled; }
 
 string Dairy::print() {
+    // Setup stream
     stringstream stream;
     stream.setf(ios::fixed, ios::floatfield);
     stream.setf(ios::showpoint);
     stream.precision(2);
 
+    // Output the collected string if already collected
     if(isCollected) stream << "(COLLECTED)";
     else{
         stream << name << " $" << price;
@@ -140,15 +149,18 @@ Frozen::Frozen(string name, double price, bool isGlutenFree, bool isVegan) : Foo
     this->isVegan = isVegan;
 }
 
+// Getters
 bool Frozen::getIsGlutenFree() { return isGlutenFree; }
 bool Frozen::getIsVegan() { return isVegan; }
 
 string Frozen::print() {
+    // Setup stream
     stringstream stream;
     stream.setf(ios::fixed, ios::floatfield);
     stream.setf(ios::showpoint);
     stream.precision(2);
 
+    // Output the collected string if already collected
     if(isCollected) stream << "(COLLECTED)";
     else{
         stream << name << " $" << price;
