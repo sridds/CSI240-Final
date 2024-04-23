@@ -44,6 +44,8 @@ public:
     // constructors
     Food();
     Food(string name, double price);
+
+    // deconstructor
     virtual ~Food(){};
 
     // getters
@@ -68,7 +70,6 @@ public:
     // constructors
     Produce();
     Produce(string name, double price, ProduceType type);
-    ~Produce() override;
 
     // getters
     ProduceType getProduceType();
@@ -85,7 +86,6 @@ public:
     // constructors
     Dairy();
     Dairy(string name, double price, bool isSpoiled = false);
-    ~Dairy() override;
 
     // getters / setters
     void setIsSpoiled(bool spoiled);
@@ -102,7 +102,6 @@ private:
 public:
     Deli();
     Deli(string name, double price, double pounds);
-    ~Deli() override;
 
     double getPounds() const;
     string print() override;
@@ -117,7 +116,6 @@ public:
     // constructors
     Frozen();
     Frozen(string name, double price, bool isGlutenFree = false, bool isVegan = false);
-    ~Frozen() override;
 
     // getters
     bool getIsGlutenFree();

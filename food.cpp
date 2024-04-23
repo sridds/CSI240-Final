@@ -158,19 +158,3 @@ string Frozen::print() {
 
     return stream.str();
 }
-
-Frozen::~Frozen() {
-    cout << "Deconstructed Frozen" << endl;
-}
-
-Deli::~Deli() {
-    cout << "Deconstructed Deli" << endl;
-}
-
-Produce::~Produce() {
-    cout << "Deconstructed Produce" << endl;
-}
-
-Dairy::~Dairy() {
-    cout << "Deconstructed Dairy" << endl;
-}

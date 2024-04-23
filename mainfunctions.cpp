@@ -254,7 +254,7 @@ void PrintUserStats(User user) {
     cout << "Statistics for user " << user.getUsername() << ".\n" << endl;
     cout << "Total Games Played: " << user.getGamesPlayed() << endl;
     cout << "Total Items Grabbed: " << user.getItemsCollected() << endl;
-    cout << "Total Amount of Money Spent: " << user.getMoneySpent() << endl;
+    cout << "Total Amount of Money Spent: $" << user.getMoneySpent() << endl;
 
     // if the user has not yet set a time, don't display the default time stored in the text file
     if (user.getBestTime() == DEFAULT_TIME) {
